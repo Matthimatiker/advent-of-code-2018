@@ -19,6 +19,7 @@
     "@babel/preset-typescript": "^7.1.0",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.11",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "ts-node": "^7.0.1",
