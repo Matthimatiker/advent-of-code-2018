@@ -10,6 +10,10 @@ Used to build up some knowledge in [TypeScript](https://www.typescriptlang.org).
 
 ## Usage ##
 
+Install dependencies:
+
+    npm install
+
 Build JavaScript files from TypeScript:
 
     npm run build
