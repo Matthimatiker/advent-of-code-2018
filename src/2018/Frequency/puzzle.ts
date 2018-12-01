@@ -1,4 +1,4 @@
-import { frequency } from './Frequency';
+import { frequency, firstRepeatedFrequency } from './Frequency';
 
 const puzzleInput = "-17\n" +
     "-20\n" +
@@ -1039,4 +1039,5 @@ const puzzleInput = "-17\n" +
     "+17\n" +
     "-82073";
 
-console.log(frequency(puzzleInput));
+console.log("Frequency sum:", frequency(puzzleInput));
+console.log("First repeated frequency:", firstRepeatedFrequency(puzzleInput));
