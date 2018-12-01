@@ -51,4 +51,11 @@ describe('firstRepeatedFrequency()', () => {
         const result = firstRepeatedFrequency("1\n-1");
         expect(result).to.equal(0);
     });
+
+    it('stops if there is no repeating frequency', () => {
+        expect(() => {
+            // Frequency values will always increase.
+            firstRepeatedFrequency([+1, +1]);
+        }).throws(Error)
+    });
 });

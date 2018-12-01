@@ -33,8 +33,11 @@ export function firstRepeatedFrequency(frequencyValuesOrLines : number[]|string)
             return currentFrequency;
         }
         seenValues.push(currentFrequency);
+        if (seenValues.length > 1000) {
+            break;
+        }
     }
-    throw new Error("Unexpected termination.");
+    throw new Error(`Cannot find repeating frequency. Terminating after finding ${seenValues.length} different frequency values.`);
 }
 
 function extractFrequencies(frequencyValuePerLine: string): number[] {
