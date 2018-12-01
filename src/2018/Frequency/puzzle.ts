@@ -1,6 +1,4 @@
 import { frequency } from './Frequency';
+import puzzleInput from './puzzle-input.txt'
 
-const fs = require('fs');
-
-const frequencyValues = fs.readFileSync('puzzle-input.txt','utf8');
-console.log(frequency(frequencyValues));
+console.log(frequency(puzzleInput));
