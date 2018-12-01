@@ -46,7 +46,12 @@ function extractFrequencies(frequencyValuePerLine: string): number[] {
         .map(frequencyLine => parseInt(frequencyLine, 10));
 }
 
-function* infinite(list : number[]):IterableIterator<number> {
+/**
+ * Creates an iterator that cycles infinitely through the given list of numbers.
+ *
+ * @param list
+ */
+function* infinite(list : number[]): IterableIterator<number> {
     const length = list.length;
     let iteration = 0;
     while (true) {
