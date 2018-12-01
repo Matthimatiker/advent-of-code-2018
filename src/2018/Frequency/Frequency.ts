@@ -26,6 +26,7 @@ export function firstRepeatedFrequency(frequencyValuesOrLines : number[]|string)
     }
     let currentFrequency = 0;
     const seenValues : number[] = [currentFrequency];
+    const iterationLimit = frequencyValues.length * 150;
     for (let value of infinite(frequencyValues)) {
         currentFrequency += value;
         if (seenValues.indexOf(currentFrequency) !== -1) {
@@ -33,7 +34,7 @@ export function firstRepeatedFrequency(frequencyValuesOrLines : number[]|string)
             return currentFrequency;
         }
         seenValues.push(currentFrequency);
-        if (seenValues.length > 1000) {
+        if (seenValues.length >= iterationLimit) {
             break;
         }
     }
