@@ -15,3 +15,7 @@ export function frequency(frequencyValuesOrLines : number[]|string): number {
     // Sum up the frequency values.
     return frequencyValues.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
 }
+
+export function firstRepeatedFrequency(frequencyValuesOrLines : number[]|string): number {
+    return 0
+}
