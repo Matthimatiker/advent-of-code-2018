@@ -33,7 +33,8 @@ export class IdAnalysis {
      * @param rightId
      */
     public static differByExactlyOneCharacter(leftId: string, rightId: string) : boolean {
-        return false;
+        const common = this.commonLetters(leftId, rightId);
+        return common.length === leftId.length - 1;
     }
 
     /**
@@ -45,6 +46,15 @@ export class IdAnalysis {
      * @param rightId
      */
     public static commonLetters(leftId: string, rightId: string) : string {
-        return "";
+        if (leftId.length !== rightId.length) {
+            throw new Error(`IDs must not differ in length, but left ID has ${leftId.length} characters and right ID has ${rightId.length} characters.`);
+        }
+        let common : string = "";
+        for (let i = 0; i < leftId.length; i++) {
+            if (leftId.charAt(i) === rightId.charAt(i)) {
+                common += leftId.charAt(i);
+            }
+        }
+        return common;
     }
 }
