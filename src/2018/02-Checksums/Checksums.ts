@@ -23,3 +23,28 @@ export class Checksum {
         return numberOfIdsWithTwoLetters * numberOfIdsWithThreeLetters;
     }
 }
+
+export class IdAnalysis {
+
+    /**
+     * Checks if 2 IDs differ by exactly one character at the same position.
+     *
+     * @param leftId
+     * @param rightId
+     */
+    public static differByExactlyOneCharacter(leftId: string, rightId: string) : boolean {
+        return false;
+    }
+
+    /**
+     * Returns the common letters (at the same position) from both IDs.
+     *
+     * The letters are ordered as they are encountered in the IDs.
+     *
+     * @param leftId
+     * @param rightId
+     */
+    public static commonLetters(leftId: string, rightId: string) : string {
+        return "";
+    }
+}

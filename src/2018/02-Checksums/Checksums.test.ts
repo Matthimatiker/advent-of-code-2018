@@ -1,5 +1,5 @@
 
-import {LetterCount, Checksum} from "./Checksums";
+import {LetterCount, Checksum, IdAnalysis} from "./Checksums";
 import {expect} from "chai";
 
 describe('LetterCount#from()', () => {
@@ -83,5 +83,53 @@ describe('Checksum#checksum()', () => {
         ];
 
         expect(Checksum.checksum(counts)).to.equal(4 * 3);
+    });
+});
+
+describe('IdAnalysis', () => {
+    describe('#commonLetters()', () => {
+        it('throws exception if input length differs', () => {
+            expect(() => {
+                IdAnalysis.commonLetters("ab", "cde");
+            }).throws(Error);
+        });
+
+        it('returns empty string if there are no common letters', () => {
+            const common = IdAnalysis.commonLetters("ab", "cd");
+
+            expect(common).to.equal("");
+        });
+
+        it('returns empty string if common letters are in different order', () => {
+            const common = IdAnalysis.commonLetters("ab", "ba");
+
+            expect(common).to.equal("");
+        });
+
+        it('returns common letters', () => {
+            const common = IdAnalysis.commonLetters("fghij", "fguij");
+
+            expect(common).to.equal("fgij");
+        });
+    });
+
+    describe('#differByExactlyOneCharacter()', () => {
+        it('returns false if IDs differ by more characters', () => {
+            const differByOne = IdAnalysis.differByExactlyOneCharacter("abcd", "aefd");
+
+            expect(differByOne).to.equal(false);
+        });
+
+        it('returns false if IDs differ are equal', () => {
+            const differByOne = IdAnalysis.differByExactlyOneCharacter("abcd", "abcd");
+
+            expect(differByOne).to.equal(false);
+        });
+
+        it('returns true if IDs differ by exactly one', () => {
+            const differByOne = IdAnalysis.differByExactlyOneCharacter("fghij", "fguij");
+
+            expect(differByOne).to.equal(true);
+        });
     });
 });
