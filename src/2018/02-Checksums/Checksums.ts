@@ -18,6 +18,8 @@ export class LetterCount {
 
 export class Checksum {
     public static checksum(letterCountPerId : LetterCount[]): number {
-        return 0;
+        const numberOfIdsWithTwoLetters = letterCountPerId.filter((letterCount) => letterCount.exactlyTwo).length;
+        const numberOfIdsWithThreeLetters = letterCountPerId.filter((letterCount) => letterCount.exactlyThree).length;
+        return numberOfIdsWithTwoLetters * numberOfIdsWithThreeLetters;
     }
 }
