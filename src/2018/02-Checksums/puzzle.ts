@@ -1,4 +1,4 @@
-import {LetterCount, Checksum} from "./Checksums";
+import {LetterCount, Checksum, IdAnalysis} from "./Checksums";
 
 const puzzleInput = "oeambtcgjqnzhgkdylfapoiusr\n" +
     "oewmbtcxjqnzhgvdyltapvqusr\n" +
@@ -251,7 +251,16 @@ const puzzleInput = "oeambtcgjqnzhgkdylfapoiusr\n" +
     "ohwmwtcxjqnzhgkdylftpviusr\n" +
     "zebmbtuxjqnzhgkdylfapviusr";
 
-const counts = puzzleInput.split("\n")
+const ids = puzzleInput.split("\n");
+const counts = ids
     .map((id) => LetterCount.from(id));
 
 console.log("Checksum: ", Checksum.checksum(counts));
+
+for (let id of ids) {
+    for (let idForComparison of ids) {
+        if (IdAnalysis.differByExactlyOneCharacter(id, idForComparison)) {
+            console.log("Similar IDs: ", id, idForComparison, "Common part: ", IdAnalysis.commonLetters(id, idForComparison));
+        }
+    }
+}
