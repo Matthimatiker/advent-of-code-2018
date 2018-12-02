@@ -15,3 +15,9 @@ export class LetterCount {
     constructor(public readonly exactlyTwo : boolean, public readonly exactlyThree : boolean) {
     }
 }
+
+export class Checksum {
+    public static checksum(letterCountPerId : LetterCount[]): number {
+        return 0;
+    }
+}

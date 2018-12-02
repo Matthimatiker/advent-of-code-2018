@@ -1,5 +1,5 @@
 
-import {LetterCount} from "./Checksums";
+import {LetterCount, Checksum} from "./Checksums";
 import {expect} from "chai";
 
 describe('LetterCount#from()', () => {
@@ -51,5 +51,37 @@ describe('LetterCount#from()', () => {
 
         expect(result.exactlyTwo).to.equal(false);
         expect(result.exactlyThree).to.equal(true);
+    });
+});
+
+describe('Checksum#checksum()', () => {
+
+    it('returns zero if given array is empty', () => {
+        expect(Checksum.checksum([])).to.equal(0);
+    });
+
+    it('multiplies exactly twice and exactly three values', () => {
+        const counts = [
+            new LetterCount(true, false),
+            new LetterCount(false, true),
+            new LetterCount(true, false),
+            new LetterCount(true, true),
+        ];
+
+        expect(Checksum.checksum(counts)).to.equal(3 * 2);
+    });
+
+    it('returns 12 for examples from LetterCount test', () => {
+        const counts = [
+            LetterCount.from("abcdef"),
+            LetterCount.from("bababc"),
+            LetterCount.from("abbcde"),
+            LetterCount.from("abcccd"),
+            LetterCount.from("aabcdd"),
+            LetterCount.from("abcdee"),
+            LetterCount.from("ababab")
+        ];
+
+        expect(Checksum.checksum(counts)).to.equal(4 * 3);
     });
 });
