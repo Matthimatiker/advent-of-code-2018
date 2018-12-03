@@ -47,4 +47,11 @@ export class Claim {
     public size(): number {
         return this.width * this.height;
     }
+
+    /**
+     * @param anotherClaim A claim that represents the intersection or null if the claims don't overlap.
+     */
+    public intersection(anotherClaim: Claim): Claim|null {
+        return null;
+    }
 }
