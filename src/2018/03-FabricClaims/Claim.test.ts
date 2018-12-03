@@ -153,11 +153,23 @@ describe('Claim', () => {
             expect(leftComparedToRight!.top).to.equal(rightComparedToLeft!.top);
         });
 
-        it('returns correct full intersection', () => {
-            const claim = Claim.from("#1 @ 1,2: 10x11");
+        it('returns correct full intersection for container.intersection(smallerClaim)', () => {
+            const container = Claim.from("#1 @ 1,2: 10x11");
             const smallerClaim = Claim.from("#2 @ 3,4: 5x6");
 
-            const intersection = claim.intersection(smallerClaim);
+            const intersection = container.intersection(smallerClaim);
+
+            expect(intersection!.width).to.equal(smallerClaim.width);
+            expect(intersection!.height).to.equal(smallerClaim.height);
+            expect(intersection!.left).to.equal(smallerClaim.left);
+            expect(intersection!.top).to.equal(smallerClaim.top);
+        });
+
+        it('returns correct full intersection for smallerClaim.intersection(container)', () => {
+            const container = Claim.from("#1 @ 1,2: 10x11");
+            const smallerClaim = Claim.from("#2 @ 3,4: 5x6");
+
+            const intersection = smallerClaim.intersection(container);
 
             expect(intersection!.width).to.equal(smallerClaim.width);
             expect(intersection!.height).to.equal(smallerClaim.height);
