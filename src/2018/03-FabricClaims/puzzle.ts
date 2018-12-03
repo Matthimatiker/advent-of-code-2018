@@ -1319,11 +1319,28 @@ for (let index = 0; index < claims.length; index++) {
         }
    }
 }
-console.log("Intersections: ", intersections.length);
+console.log("Intersections:", intersections.length);
 const uniqueInchesMap : {[key: string]: InchPosition} = {};
 for (let intersection of intersections) {
     for (let inch of intersection.getInches()) {
         uniqueInchesMap[inch.toString()] = inch;
     }
 }
-console.log("Overlapping square inches: ", Object.values(uniqueInchesMap).length);
+console.log("Overlapping square inches:", Object.values(uniqueInchesMap).length);
+
+for (let claim of claims) {
+    let intersects = false;
+    for (let anotherClaim of claims) {
+        if (claim === anotherClaim) {
+            // Do not compare to self.
+            continue;
+        }
+        if (claim.intersection(anotherClaim) !== null) {
+            intersects = true;
+            break;
+        }
+    }
+    if (!intersects) {
+        console.log("Claim that does not intersect with any other:", claim.id);
+    }
+}
