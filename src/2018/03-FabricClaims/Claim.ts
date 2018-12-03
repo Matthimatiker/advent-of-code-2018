@@ -78,6 +78,47 @@ export class Claim {
      * @param anotherClaim A claim that represents the intersection or null if the claims don't overlap.
      */
     public intersection(anotherClaim: Claim): Claim|null {
-        return null;
+        if (anotherClaim.getRight() < this.left || anotherClaim.left > this.getRight()) {
+            // No horizontal intersection possible.
+            return null;
+        }
+        if (anotherClaim.getBottom() < this.top || anotherClaim.top > this.getBottom()) {
+            // No vertical intersection possible.
+            return null;
+        }
+
+        let intersectionLeft = -1;
+        if (anotherClaim.left >= this.left && anotherClaim.left <= this.getRight()) {
+            intersectionLeft = anotherClaim.left;
+        } else {
+            intersectionLeft = this.left;
+        }
+        let intersectionTop = -1;
+        if (anotherClaim.top >= this.top && anotherClaim.top <= this.getBottom()) {
+            intersectionTop = anotherClaim.top;
+        } else {
+            intersectionTop = this.top;
+        }
+        let intersectionRight = -1;
+        if (anotherClaim.getRight() >= this.left && anotherClaim.getRight() <= this.getRight()) {
+            intersectionRight = anotherClaim.getRight();
+        } else {
+            intersectionRight = this.getRight();
+        }
+        let intersectionBottom = -1;
+        if (anotherClaim.getBottom() >= this.top && anotherClaim.getBottom() <= this.getBottom()) {
+            intersectionBottom = anotherClaim.getBottom()
+        } else {
+            intersectionBottom = this.getBottom();
+        }
+        const intersectionWidth = intersectionRight - intersectionLeft;
+        const intersectionHeight = intersectionBottom - intersectionTop;
+        return new Claim(
+            `intersection ${intersectionLeft},${intersectionTop}: ${intersectionWidth}x${intersectionHeight}`,
+            intersectionLeft,
+            intersectionTop,
+            intersectionWidth,
+            intersectionHeight
+        );
     }
 }
