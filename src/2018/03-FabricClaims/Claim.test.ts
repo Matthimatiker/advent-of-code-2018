@@ -178,6 +178,24 @@ describe('Claim', () => {
         });
     });
 
+    describe('#getInches()', () => {
+        it('returns correct number of inches', () => {
+            const claim = new Claim("42", 1, 2, 3, 4);
+
+            const inches = claim.getInches();
+
+            expect(inches.length).to.equal(3 * 4);
+        });
+
+        it('returns correct inches', () => {
+            const claim = new Claim("42", 2, 3, 1, 1);
+
+            const inch = claim.getInches()[0];
+
+            expect(inch.left).to.equal(2);
+            expect(inch.top).to.equal(3);
+        });
+    });
 });
 
 describe('InchPosition', () => {
