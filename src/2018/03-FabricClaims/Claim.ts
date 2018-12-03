@@ -20,6 +20,18 @@ export class Claim {
         );
     }
 
+    /**
+     * Defines the claim.
+     *
+     * Top and left are inch coordinates.
+     * Width and height are inch values.
+     *
+     * @param id
+     * @param left
+     * @param top
+     * @param width
+     * @param height
+     */
     public constructor(
         public readonly id: string,
         public readonly left: number,
@@ -42,6 +54,20 @@ export class Claim {
         if (height <= 0) {
             throw new Error(`Height must be greater than zero, but got ${height}.`);
         }
+    }
+
+    /**
+     * Returns the right inch.
+     */
+    public getRight(): number {
+        return this.left + this.width;
+    }
+
+    /**
+     * Returns the bottom inch.
+     */
+    public getBottom(): number {
+        return this.top + this.height;
     }
 
     public size(): number {

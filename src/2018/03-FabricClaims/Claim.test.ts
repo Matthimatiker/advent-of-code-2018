@@ -92,6 +92,22 @@ describe('Claim', () => {
         });
     });
 
+    describe('#getRight()', () => {
+        it('returns correct value', () => {
+            const claim = new Claim("13", 42, 17, 7, 13);
+
+            expect(claim.getRight()).to.equal(claim.left + claim.width);
+        });
+    });
+
+    describe('#getBottom()', () => {
+        it('returns correct value', () => {
+            const claim = new Claim("13", 42, 17, 7, 13);
+
+            expect(claim.getBottom()).to.equal(claim.top + claim.height);
+        });
+    });
+
     describe('#size()', () => {
        it('returns correct value', () => {
            const claim = new Claim("13", 42, 17, 7, 13);
