@@ -91,4 +91,12 @@ describe('Claim', () => {
             }).throws(Error);
         });
     });
+
+    describe('#size()', () => {
+       it('returns correct value', () => {
+           const claim = new Claim("13", 42, 17, 7, 13);
+
+           expect(claim.size()).to.equal(7 * 13);
+       });
+    });
 });

@@ -43,4 +43,8 @@ export class Claim {
             throw new Error(`Height must be greater than zero, but got ${height}.`);
         }
     }
+
+    public size(): number {
+        return this.width * this.height;
+    }
 }
