@@ -121,4 +121,29 @@ export class Claim {
             intersectionHeight
         );
     }
+
+    public getInches(): InchPosition[] {
+        return [];
+    }
+}
+
+/**
+ * Represents the position of a single square-inch.
+ */
+export class InchPosition {
+    public constructor(
+        public readonly left: number,
+        public readonly top: number
+    ) {
+        if (left < 0) {
+            throw new Error(`Left value must be greater than or equal to zero, but got ${left}.`);
+        }
+        if (top < 0) {
+            throw new Error(`Top value must be greater than or equal to zero, but got ${top}.`);
+        }
+    }
+
+    public toString(): string {
+        return `${this.left},${this.top}`;
+    }
 }

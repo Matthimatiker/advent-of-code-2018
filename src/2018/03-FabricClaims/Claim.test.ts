@@ -1,4 +1,4 @@
-import {Claim} from "./Claim"
+import {Claim, InchPosition} from "./Claim"
 import {expect} from "chai";
 
 describe('Claim', () => {
@@ -178,4 +178,50 @@ describe('Claim', () => {
         });
     });
 
+});
+
+describe('InchPosition', () => {
+    describe('constructor()', () => {
+        it('rejects negative left value', () => {
+            expect(() => {
+                new InchPosition(-1, 3);
+            }).throws(Error);
+        });
+
+        it('rejects negative top value', () => {
+            expect(() => {
+                new InchPosition(3, -1);
+            }).throws(Error);
+        });
+
+        it('assigns correct top and left values', () => {
+            const position = new InchPosition(3, 5);
+
+            expect(position.left).to.equal(3);
+            expect(position.top).to.equal(5);
+        });
+    });
+
+    describe('toString()', () => {
+        it('provides different value if top value differs', () => {
+            const first = new InchPosition(3, 5);
+            const second = new InchPosition(3, 4);
+
+            expect(first.toString()).to.not.equal(second.toString());
+        });
+
+        it('provides different value if left value differs', () => {
+            const first = new InchPosition(3, 5);
+            const second = new InchPosition(4, 5);
+
+            expect(first.toString()).to.not.equal(second.toString());
+        });
+
+        it('provides same value if coordinates are equal', () => {
+            const first = new InchPosition(3, 5);
+            const second = new InchPosition(3, 5);
+
+            expect(first.toString()).to.equal(second.toString());
+        });
+    });
 });
