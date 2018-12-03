@@ -57,17 +57,17 @@ export class Claim {
     }
 
     /**
-     * Returns the right inch.
+     * Returns the right inch (included in claim).
      */
     public getRight(): number {
-        return this.left + this.width;
+        return this.left + this.width - 1;
     }
 
     /**
-     * Returns the bottom inch.
+     * Returns the bottom inch (included in claim).
      */
     public getBottom(): number {
-        return this.top + this.height;
+        return this.top + this.height - 1;
     }
 
     public size(): number {
@@ -111,8 +111,8 @@ export class Claim {
         } else {
             intersectionBottom = this.getBottom();
         }
-        const intersectionWidth = intersectionRight - intersectionLeft;
-        const intersectionHeight = intersectionBottom - intersectionTop;
+        const intersectionWidth = intersectionRight - intersectionLeft + 1;
+        const intersectionHeight = intersectionBottom - intersectionTop + 1;
         return new Claim(
             `intersection ${intersectionLeft},${intersectionTop}: ${intersectionWidth}x${intersectionHeight}`,
             intersectionLeft,
@@ -123,7 +123,13 @@ export class Claim {
     }
 
     public getInches(): InchPosition[] {
-        return [];
+        const inches: InchPosition[] = [];
+        for (let inchLeft = this.left; inchLeft <= this.getRight(); inchLeft++) {
+            for (let inchTop = this.top; inchTop <= this.getBottom(); inchTop++) {
+                inches.push(new InchPosition(inchLeft, inchTop));
+            }
+        }
+        return inches;
     }
 }
 

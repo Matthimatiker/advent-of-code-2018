@@ -94,17 +94,17 @@ describe('Claim', () => {
 
     describe('#getRight()', () => {
         it('returns correct value', () => {
-            const claim = new Claim("13", 42, 17, 7, 13);
+            const claim = new Claim("13", 3, 17, 2, 13);
 
-            expect(claim.getRight()).to.equal(claim.left + claim.width);
+            expect(claim.getRight()).to.equal(4);
         });
     });
 
     describe('#getBottom()', () => {
         it('returns correct value', () => {
-            const claim = new Claim("13", 42, 17, 7, 13);
+            const claim = new Claim("13", 42, 7, 9, 2);
 
-            expect(claim.getBottom()).to.equal(claim.top + claim.height);
+            expect(claim.getBottom()).to.equal(8);
         });
     });
 
