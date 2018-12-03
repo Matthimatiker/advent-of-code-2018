@@ -84,5 +84,11 @@ describe('Claim', () => {
             expect(claim.width).to.equal(5);
             expect(claim.height).to.equal(4);
         });
+
+        it('rejects identifier in invalid format', () => {
+            expect(() => {
+                Claim.from("buhuhu");
+            }).throws(Error);
+        });
     });
 });
