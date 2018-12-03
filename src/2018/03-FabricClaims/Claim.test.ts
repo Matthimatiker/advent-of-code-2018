@@ -126,7 +126,7 @@ describe('Claim', () => {
             expect(intersection).to.equal(null);
         });
 
-        it('returns correct intersection', () => {
+        it('returns correct partial intersection', () => {
             // Example from puzzle:
             const claim = Claim.from("#1 @ 1,3: 4x4");
             const anotherClaim = Claim.from("#2 @ 3,1: 4x4");
@@ -151,6 +151,18 @@ describe('Claim', () => {
             expect(leftComparedToRight!.height).to.equal(rightComparedToLeft!.height);
             expect(leftComparedToRight!.left).to.equal(rightComparedToLeft!.left);
             expect(leftComparedToRight!.top).to.equal(rightComparedToLeft!.top);
+        });
+
+        it('returns correct full intersection', () => {
+            const claim = Claim.from("#1 @ 1,2: 10x11");
+            const smallerClaim = Claim.from("#2 @ 3,4: 5x6");
+
+            const intersection = claim.intersection(smallerClaim);
+
+            expect(intersection!.width).to.equal(smallerClaim.width);
+            expect(intersection!.height).to.equal(smallerClaim.height);
+            expect(intersection!.left).to.equal(smallerClaim.left);
+            expect(intersection!.top).to.equal(smallerClaim.top);
         });
     });
 
