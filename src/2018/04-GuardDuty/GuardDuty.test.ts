@@ -244,6 +244,35 @@ describe('GuardProfile', () => {
         });
     });
 
+    describe('#fromShifts()', () => {
+        it('creates profiles from shifts', () => {
+            const shifts = [
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
+                    ]
+                ),
+                new GuardShift(
+                    42,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #42 begins shift')
+                    ]
+                ),
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift')
+                    ]
+                )
+            ];
+
+            const profiles = GuardProfile.fromShifts(shifts);
+
+            expect(profiles).to.have.lengthOf(2);
+        });
+    });
+
     describe('#getMinutesAsleep()', () => {
         it('returns minutes asleep from all shifts', () => {
             const shifts = [
@@ -268,6 +297,23 @@ describe('GuardProfile', () => {
             const profile = new GuardProfile(shifts);
 
             expect(profile.getMinutesAsleep()).to.equal(10 + 10);
+        });
+    });
+
+    describe('#getGuard()', () => {
+        it('returns correct value', () => {
+            const shifts = [
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift')
+                    ]
+                )
+            ];
+
+            const profile = new GuardProfile(shifts);
+
+            expect(profile.getGuard()).to.equal(10);
         });
     });
 });

@@ -128,6 +128,11 @@ export class GuardShift {
 }
 
 export class GuardProfile {
+
+    public static fromShifts(shifts: GuardShift[]): GuardProfile[] {
+        throw new Error("Not implemented");
+    }
+
     public constructor(
         public readonly shifts: GuardShift[]
     ) {
@@ -135,6 +140,10 @@ export class GuardProfile {
         if (differentGuards.size !== 1) {
             throw new Error(`Expected shifts from exactly one guard, but got shifts from guards: ${[...differentGuards].join(', ')}`);
         }
+    }
+
+    public getGuard(): Guard {
+        return this.shifts[0].guard;
     }
 
     public getMinutesAsleep(): number {
