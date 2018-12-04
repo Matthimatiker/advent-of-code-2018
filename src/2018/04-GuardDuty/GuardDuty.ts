@@ -130,7 +130,14 @@ export class GuardShift {
 export class GuardProfile {
 
     public static fromShifts(shifts: GuardShift[]): GuardProfile[] {
-        throw new Error("Not implemented");
+        const shiftsByGuard: {[key: number]: GuardShift[]} = {};
+        for (let shift of shifts) {
+            if (!(shift.guard in shiftsByGuard)) {
+                shiftsByGuard[shift.guard] = [];
+            }
+            shiftsByGuard[shift.guard].push(shift);
+        }
+        return Object.values(shiftsByGuard).map((shifts) => new GuardProfile(shifts));
     }
 
     public constructor(
