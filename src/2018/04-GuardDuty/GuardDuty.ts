@@ -125,7 +125,19 @@ export class GuardShift {
      * A list of minutes that the guard was asleep in this shift.
      */
     public getSleepingMinutes(): number[] {
-        return [];
+        let sleepingMinutes: number[] = [];
+        for (let i = 0; i < this.events.length - 1; i++) {
+            const event = this.events[i];
+            if (event.type === GuardEventType.FALL_ASLEEP) {
+                const wakeUpEvent = this.events[i + 1];
+                let minutesAsleep = this.calculateDurationInMinutes(event, wakeUpEvent);
+                let startMinute = event.getDate().getMinutes();
+                for (let i = 0; i < minutesAsleep; i++) {
+                    sleepingMinutes.push((startMinute + i) % 60);
+                }
+            }
+        }
+        return sleepingMinutes;
     }
 
     private calculateDurationInMinutes(start: GuardEvent, end: GuardEvent): number {

@@ -241,13 +241,13 @@ describe('GuardShift', () => {
                 GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
                 GuardEvent.from('[1518-11-01 23:55] falls asleep'),
                 GuardEvent.from('[1518-11-01 23:59] wakes up'),
-                GuardEvent.from('[1518-11-02 00:55] falls asleep'),
+                GuardEvent.from('[1518-11-02 00:54] falls asleep'),
                 GuardEvent.from('[1518-11-02 00:57] wakes up')
             ];
 
             const shift = new GuardShift(10, events);
 
-            expect(shift.getSleepingMinutes().sort()).to.deep.equal([55, 56, 57, 58, 55, 56].sort());
+            expect(shift.getSleepingMinutes().sort()).to.deep.equal([55, 56, 57, 58, 54, 55, 56].sort());
         });
     });
 });
