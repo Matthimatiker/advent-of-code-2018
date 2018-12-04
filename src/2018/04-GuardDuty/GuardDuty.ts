@@ -50,7 +50,26 @@ export class GuardEvent {
 export class GuardShift {
 
     public static fromEvents(events: GuardEvent[]): GuardShift[] {
-        throw new Error("not implemented");
+        const orderedEvents = events.sort((left, right) => {
+            return left.date.localeCompare(right.date);
+        });
+        const shifts : GuardShift[] = [];
+        let eventsForNextShift: GuardEvent[] = [];
+        for (let event of orderedEvents) {
+            if (event.type === GuardEventType.BEGIN_SHIFT) {
+                // A new shift starts.
+                if (eventsForNextShift.length > 0) {
+                    shifts.push(new GuardShift(eventsForNextShift[0].guard!, eventsForNextShift));
+                }
+                eventsForNextShift = [];
+            }
+            eventsForNextShift.push(event);
+        }
+        // Add the last shift.
+        if (eventsForNextShift.length > 0) {
+            shifts.push(new GuardShift(eventsForNextShift[0].guard!, eventsForNextShift));
+        }
+        return shifts;
     }
 
     public constructor(
