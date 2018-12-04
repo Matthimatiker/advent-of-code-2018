@@ -1,4 +1,4 @@
-import {GuardEvent, GuardShift} from "./GuardDuty";
+import {GuardEvent, GuardProfile, GuardShift} from "./GuardDuty";
 
 const puzzleInput = "[1518-05-11 00:47] wakes up\n" +
     "[1518-07-13 00:59] wakes up\n" +
@@ -1134,3 +1134,9 @@ console.log("Events:", events.length);
 
 const shifts = GuardShift.fromEvents(events);
 console.log("Shifts:", shifts.length);
+
+const profiles = GuardProfile.fromShifts(shifts).sort((left, right) => left.getMinutesAsleep() - right.getMinutesAsleep());
+console.log("Guards:", profiles.length);
+
+console.log("Min minutes asleep:", profiles[0].getMinutesAsleep(), `by #${profiles[0].getGuard()}`);
+console.log("Max minutes asleep:", profiles[profiles.length - 1].getMinutesAsleep(), `by #${profiles[profiles.length - 1].getGuard()}`);
