@@ -93,6 +93,10 @@ export class GuardShift {
             throw new Error(`Detected case that is currently not covered: Last event for guard ${guard} is FALL_ASLEEP: ${events[events.length - 1]}`);
         }
     }
+
+    public getMinutesAsleep(): number {
+        return 0;
+    }
 }
 
 export class GuardProfile {

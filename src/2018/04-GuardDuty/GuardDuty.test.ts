@@ -162,4 +162,54 @@ describe('GuardShift', () => {
             }).throws(Error);
         });
     });
+
+    describe('#getMinutesAsleep()', () => {
+        it('returns zero if guard did not sleep', () => {
+            const events = [
+                GuardEvent.from('[1518-11-01 00:00] Guard #10 begins shift')
+            ];
+
+            const shift = new GuardShift(10, events);
+
+            expect(shift.getMinutesAsleep()).to.equal(0);
+        });
+
+        it('returns correct value for single sleep interval', () => {
+            const events = [
+                GuardEvent.from('[1518-11-01 00:00] Guard #10 begins shift'),
+                GuardEvent.from('[1518-11-01 00:05] falls asleep'),
+                GuardEvent.from('[1518-11-01 00:25] wakes up')
+            ];
+
+            const shift = new GuardShift(10, events);
+
+            expect(shift.getMinutesAsleep()).to.equal(20);
+        });
+
+        it('returns correct value for multiple sleep intervals', () => {
+            const events = [
+                GuardEvent.from('[1518-11-01 00:00] Guard #10 begins shift'),
+                GuardEvent.from('[1518-11-01 00:05] falls asleep'),
+                GuardEvent.from('[1518-11-01 00:25] wakes up'),
+                GuardEvent.from('[1518-11-01 00:30] falls asleep'),
+                GuardEvent.from('[1518-11-01 00:55] wakes up')
+            ];
+
+            const shift = new GuardShift(10, events);
+
+            expect(shift.getMinutesAsleep()).to.equal(20 + 25);
+        });
+
+        it('returns correct value for sleep interval that starts at previous day', () => {
+            const events = [
+                GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
+                GuardEvent.from('[1518-11-01 23:55] falls asleep'),
+                GuardEvent.from('[1518-11-02 00:05] wakes up')
+            ];
+
+            const shift = new GuardShift(10, events);
+
+            expect(shift.getMinutesAsleep()).to.equal(10);
+        });
+    });
 });
