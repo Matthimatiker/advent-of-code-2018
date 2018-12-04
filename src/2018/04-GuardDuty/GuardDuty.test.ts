@@ -41,5 +41,11 @@ describe('GuardEvent', () => {
                 new GuardEvent('1518-11-01 00:05', null, GuardEventType.BEGIN_SHIFT);
             }).throws(Error);
         });
+
+        it('rejects date with invalid length', () => {
+            expect(() => {
+                new GuardEvent('15:05', null, GuardEventType.WAKE_UP);
+            }).throws(Error);
+        });
     });
 });

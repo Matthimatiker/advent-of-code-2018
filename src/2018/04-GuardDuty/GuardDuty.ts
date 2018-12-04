@@ -41,6 +41,9 @@ export class GuardEvent {
         if (type === GuardEventType.BEGIN_SHIFT && guard === null) {
             throw new Error('Guard ID must be provided for BEGIN_SHIFT events.');
         }
+        if (date.length !== 16) {
+            throw new Error(`Expected date in format YYYY-MM-DD HH:MM, but got "${date}".`);
+        }
     }
 }
 
