@@ -121,6 +121,13 @@ export class GuardShift {
         return minutesAsleep;
     }
 
+    /**
+     * A list of minutes that the guard was asleep in this shift.
+     */
+    public getSleepingMinutes(): number[] {
+        return [];
+    }
+
     private calculateDurationInMinutes(start: GuardEvent, end: GuardEvent): number {
         const durationInMilliseconds = end.getDate().getTime() - start.getDate().getTime();
         return durationInMilliseconds / (60 * 1000);

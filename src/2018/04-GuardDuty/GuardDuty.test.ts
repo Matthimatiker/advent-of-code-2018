@@ -212,6 +212,44 @@ describe('GuardShift', () => {
             expect(shift.getMinutesAsleep()).to.equal(10);
         });
     });
+
+    describe('#getSleepingMinutes()', () => {
+        it('returns empty list if guard was not asleep', () => {
+            const events = [
+                GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift')
+            ];
+
+            const shift = new GuardShift(10, events);
+
+            expect(shift.getSleepingMinutes()).to.have.lengthOf(0);
+        });
+
+        it('returns correct minutes', () => {
+            const events = [
+                GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
+                GuardEvent.from('[1518-11-01 23:55] falls asleep'),
+                GuardEvent.from('[1518-11-01 23:59] wakes up')
+            ];
+
+            const shift = new GuardShift(10, events);
+
+            expect(shift.getSleepingMinutes().sort()).to.deep.equal([55, 56, 57, 58]);
+        });
+
+        it('contains minute twice if guard was asleep in that minute multiple times', () => {
+            const events = [
+                GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
+                GuardEvent.from('[1518-11-01 23:55] falls asleep'),
+                GuardEvent.from('[1518-11-01 23:59] wakes up'),
+                GuardEvent.from('[1518-11-02 00:55] falls asleep'),
+                GuardEvent.from('[1518-11-02 00:57] wakes up')
+            ];
+
+            const shift = new GuardShift(10, events);
+
+            expect(shift.getSleepingMinutes().sort()).to.deep.equal([55, 56, 57, 58, 55, 56].sort());
+        });
+    });
 });
 
 describe('GuardProfile', () => {
