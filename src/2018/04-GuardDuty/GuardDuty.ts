@@ -57,7 +57,22 @@ export class GuardShift {
         public readonly guard: Guard,
         public readonly events: GuardEvent[]
     ) {
-
+        if (events.length === 0) {
+            throw new Error(`Expected at least one event for guard ${guard}.`);
+        }
+        let dateBefore = '0000-00-00 00:00';
+        for (let event of events) {
+            if (event.guard !== null && event.guard !== guard) {
+                throw new Error(`Expected only events of guard ${guard}, but found an event that belongs to ${event.guard}: ${event}`);
+            }
+            if (event.date < dateBefore) {
+                throw new Error(`Expected events in ascending order, but found event from "${event.date}" after "${dateBefore}: ${event}"`);
+            }
+            dateBefore = event.date;
+        }
+        if (events[events.length - 1].type === GuardEventType.FALL_ASLEEP) {
+            throw new Error(`Detected case that is currently not covered: Last event for guard ${guard} is FALL_ASLEEP: ${events[events.length - 1]}`);
+        }
     }
 }
 

@@ -140,6 +140,15 @@ describe('GuardShift', () => {
             }).throws(Error);
         });
 
+        it('rejects empty event list', () => {
+            expect(() => {
+                new GuardShift(
+                    42,
+                    []
+                )
+            }).throws(Error);
+        });
+
         it('throws error if last event is ASLEEP', () => {
             // If that's the case, we have an edge case that must be covered.
             expect(() => {
