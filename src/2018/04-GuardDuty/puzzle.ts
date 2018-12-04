@@ -1139,4 +1139,10 @@ const profiles = GuardProfile.fromShifts(shifts).sort((left, right) => left.getM
 console.log("Guards:", profiles.length);
 
 console.log("Min minutes asleep:", profiles[0].getMinutesAsleep(), `by #${profiles[0].getGuard()}`);
-console.log("Max minutes asleep:", profiles[profiles.length - 1].getMinutesAsleep(), `by #${profiles[profiles.length - 1].getGuard()}`);
+const longestSleepingGuard = profiles[profiles.length - 1];
+console.log(
+    "Max minutes asleep:", longestSleepingGuard.getMinutesAsleep(),
+    `by #${longestSleepingGuard.getGuard()}`,
+    "Most sleeping in minute:", longestSleepingGuard.getMaxSleepingMinute(),
+    "GuardId * Most sleeping minute:", longestSleepingGuard.getGuard() * longestSleepingGuard.getMaxSleepingMinute()!
+);
