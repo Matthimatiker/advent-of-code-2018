@@ -175,5 +175,26 @@ export class GuardProfile {
     public getMinutesAsleep(): number {
         return this.shifts.map((shift) => shift.getMinutesAsleep()).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
     }
+
+    /**
+     * Returns the minute that the guard sleeps most.
+     */
+    public getMaxSleepingMinute(): number|null {
+        const sleepingMinutes = this.shifts
+            .map((shift) => shift.getSleepingMinutes())
+            .reduce((previous, current) => previous.concat(current), []);
+        if (sleepingMinutes.length === 0) {
+            return null;
+        }
+        return sleepingMinutes
+            // Sort by number of the occurences of the value...
+            .sort((left, right) => {
+                const occurrencesOfLeft = sleepingMinutes.filter(value => value === left).length;
+                const occurrencesOfRight = sleepingMinutes.filter(value => value === right).length;
+                return occurrencesOfLeft - occurrencesOfRight;
+            })
+            // ... and return the value that occurred most often.
+            .pop() as number;
+    }
 }
 
