@@ -177,6 +177,13 @@ export class GuardProfile {
     }
 
     /**
+     * Returns the sleeping time by minute.
+     */
+    public getSleepingByMinute():  {[key: number]: number} {
+        return {};
+    }
+
+    /**
      * Returns the minute that the guard sleeps most.
      */
     public getMaxSleepingMinute(): number|null {

@@ -396,4 +396,51 @@ describe('GuardProfile', () => {
             expect(profile.getMaxSleepingMinute()).to.equal(2);
         });
     });
+
+    describe('#getSleepingByMinute()', () => {
+        it('returns map with zero entries if guard did not sleep', () => {
+            const shifts = [
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift')
+                    ]
+                )
+            ];
+
+            const sleepingByMinute = new GuardProfile(shifts).getSleepingByMinute();
+
+            expect(sleepingByMinute[0]).to.equal(0);
+            expect(sleepingByMinute[30]).to.equal(0);
+            expect(sleepingByMinute[59]).to.equal(0);
+        });
+
+        it('returns map with correct values', () => {
+            const shifts = [
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
+                        GuardEvent.from('[1518-11-01 23:59] falls asleep'),
+                        GuardEvent.from('[1518-11-02 00:03] wakes up')
+                    ]
+                ),
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-03 00:00] Guard #10 begins shift'),
+                        GuardEvent.from('[1518-11-03 00:02] falls asleep'),
+                        GuardEvent.from('[1518-11-03 00:05] wakes up')
+                    ]
+                )
+            ];
+
+            const sleepingByMinute = new GuardProfile(shifts).getSleepingByMinute();
+
+            expect(sleepingByMinute[2]).to.equal(2);
+            expect(sleepingByMinute[59]).to.equal(1);
+            expect(sleepingByMinute[4]).to.equal(1);
+            expect(sleepingByMinute[50]).to.equal(0);
+        });
+    });
 });
