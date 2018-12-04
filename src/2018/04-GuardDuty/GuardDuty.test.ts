@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {GuardEvent, GuardEventType, GuardShift} from "./GuardDuty";
+import {GuardEvent, GuardEventType, GuardProfile, GuardShift} from "./GuardDuty";
 
 describe('GuardEvent', () => {
 
@@ -210,6 +210,64 @@ describe('GuardShift', () => {
             const shift = new GuardShift(10, events);
 
             expect(shift.getMinutesAsleep()).to.equal(10);
+        });
+    });
+});
+
+describe('GuardProfile', () => {
+    describe('constructor()', () => {
+        it('rejects shifts from multiple guards', () => {
+            const shifts = [
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
+                    ]
+                ),
+                new GuardShift(
+                    42,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #42 begins shift')
+                    ]
+                )
+            ];
+
+            expect(() => {
+                new GuardProfile(shifts);
+            }).throws(Error);
+        });
+
+        it('rejects empty shift list', () => {
+            expect(() => {
+                new GuardProfile([]);
+            }).throws(Error);
+        });
+    });
+
+    describe('#getMinutesAsleep()', () => {
+        it('returns minutes asleep from all shifts', () => {
+            const shifts = [
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
+                        GuardEvent.from('[1518-11-01 23:55] falls asleep'),
+                        GuardEvent.from('[1518-11-02 00:05] wakes up')
+                    ]
+                ),
+                new GuardShift(
+                    10,
+                    [
+                        GuardEvent.from('[1518-11-01 23:50] Guard #10 begins shift'),
+                        GuardEvent.from('[1518-11-01 23:55] falls asleep'),
+                        GuardEvent.from('[1518-11-02 00:05] wakes up')
+                    ]
+                )
+            ];
+
+            const profile = new GuardProfile(shifts);
+
+            expect(profile.getMinutesAsleep()).to.equal(10 + 10);
         });
     });
 });

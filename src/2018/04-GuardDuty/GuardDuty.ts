@@ -133,5 +133,9 @@ export class GuardProfile {
     ) {
 
     }
+
+    public getMinutesAsleep(): number {
+        return 0;
+    }
 }
 
