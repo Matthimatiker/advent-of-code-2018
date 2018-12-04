@@ -45,6 +45,21 @@ export class GuardEvent {
             throw new Error(`Expected date in format YYYY-MM-DD HH:MM, but got "${date}".`);
         }
     }
+
+    public getDate(): Date {
+        const [date, time] = this.date.split(" ");
+        const [year, month, day] = date.split("-");
+        const [hour, minutes] = time.split(":");
+        return new Date(
+            parseInt(year, 10),
+            parseInt(month, 10) - 1,
+            parseInt(day, 10),
+            parseInt(hour, 10),
+            parseInt(minutes, 10),
+            0,
+            0
+        );
+    }
 }
 
 export class GuardShift {
@@ -95,7 +110,20 @@ export class GuardShift {
     }
 
     public getMinutesAsleep(): number {
-        return 0;
+        let minutesAsleep: number = 0;
+        for (let i = 0; i < this.events.length - 1; i++) {
+            const event = this.events[i];
+            if (event.type === GuardEventType.FALL_ASLEEP) {
+                const wakeUpEvent = this.events[i + 1];
+                minutesAsleep += this.calculateDurationInMinutes(event, wakeUpEvent);
+            }
+        }
+        return minutesAsleep;
+    }
+
+    private calculateDurationInMinutes(start: GuardEvent, end: GuardEvent): number {
+        const durationInMilliseconds = end.getDate().getTime() - start.getDate().getTime();
+        return durationInMilliseconds / (60 * 1000);
     }
 }
 
