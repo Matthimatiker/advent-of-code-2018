@@ -180,7 +180,15 @@ export class GuardProfile {
      * Returns the sleeping time by minute.
      */
     public getSleepingByMinute():  {[key: number]: number} {
-        return {};
+        const sleepByMinute : {[key: number]: number} = {};
+        for (let minute: number = 0; minute < 60; minute++) {
+            sleepByMinute[minute] = 0;
+        }
+        this.shifts
+            .map((shift) => shift.getSleepingMinutes())
+            .reduce((previous, current) => previous.concat(current), [])
+            .forEach((minute) => { sleepByMinute[minute] = sleepByMinute[minute] + 1 });
+        return sleepByMinute;
     }
 
     /**
