@@ -1146,3 +1146,15 @@ console.log(
     "Most sleeping in minute:", longestSleepingGuard.getMaxSleepingMinute(),
     "GuardId * Most sleeping minute:", longestSleepingGuard.getGuard() * longestSleepingGuard.getMaxSleepingMinute()!
 );
+
+const maxSleepsInMinute = profiles
+    .sort((left, right) => {
+        return Math.max(...Object.values(left.getSleepingByMinute())) - Math.max(...Object.values(right.getSleepingByMinute()))
+    })
+    .pop()!;
+console.log(
+    "Max sleeping in minute:", maxSleepsInMinute.getMaxSleepingMinute(),
+    "Sleeping times:", maxSleepsInMinute.getSleepingByMinute()[maxSleepsInMinute.getMaxSleepingMinute()!],
+    `by #${maxSleepsInMinute.getGuard()}`,
+    "GuardId * Most often sleeping minute:", maxSleepsInMinute.getGuard() * maxSleepsInMinute.getMaxSleepingMinute()!
+);
