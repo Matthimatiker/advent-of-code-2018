@@ -131,11 +131,14 @@ export class GuardProfile {
     public constructor(
         public readonly shifts: GuardShift[]
     ) {
-
+        const differentGuards = new Set(shifts.map((shift) => shift.guard));
+        if (differentGuards.size !== 1) {
+            throw new Error(`Expected shifts from exactly one guard, but got shifts from guards: ${[...differentGuards].join(', ')}`);
+        }
     }
 
     public getMinutesAsleep(): number {
-        return 0;
+        return this.shifts.map((shift) => shift.getMinutesAsleep()).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
     }
 }
 
