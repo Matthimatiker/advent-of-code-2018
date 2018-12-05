@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {react} from "./Polymer";
+import {react, removeUnit} from "./Polymer";
 
 describe('react()', () => {
     it('does not remove units of same polarity', () => {
@@ -49,4 +49,14 @@ describe('react()', () => {
 
         expect(reactedPolymer).to.equal('dabCBAcaDA');
     });
+});
+
+describe('removeUnit()', () => {
+    it('removes all unit types', () => {
+        const polymer = 'dabAcCaCBAcCcaDA';
+
+        const reduced = removeUnit(polymer, 'a');
+
+        expect(reduced).to.equal('dbcCCBcCcD');
+    })
 });

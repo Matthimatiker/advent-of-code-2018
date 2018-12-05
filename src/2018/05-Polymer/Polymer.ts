@@ -5,7 +5,7 @@ const reactingUnits = [];
 for (let character of lowerCaseCharacters) {
     reactingUnits.push(character + character.toUpperCase(), character.toUpperCase() + character)
 }
-const reactionRegExp = new RegExp(`(${reactingUnits.join('|')})`);
+const reactionRegExp = new RegExp(`(${reactingUnits.join('|')})`, 'g');
 
 /**
  * Removes units in the polymer that can react (same type, different polarity).
@@ -22,4 +22,17 @@ export function react(polymer: Polymer): Polymer {
         removedUnits = previousUnits - reactedPolymer.length;
     } while(removedUnits > 0);
     return reactedPolymer
+}
+
+/**
+ * Removes all types of the given unit from the polymer.
+ *
+ * E.g. passing "a" will remove all "a" and "A" units.
+ *
+ * @param polymer
+ * @param unit
+ */
+export function removeUnit(polymer: Polymer, unit: string): Polymer {
+    const removeUnitRegExp = new RegExp(`(${unit.toLowerCase()}|${unit.toUpperCase()})`, 'g');
+    return polymer.replace(removeUnitRegExp, '');
 }
