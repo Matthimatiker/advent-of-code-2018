@@ -8,6 +8,8 @@ for (let character of lowerCaseCharacters) {
 }
 const reactionRegExp = new RegExp(`(${reactingUnits.join('|')})`, 'g');
 
+export const UNITS : Unit[] = lowerCaseCharacters;
+
 /**
  * Removes units in the polymer that can react (same type, different polarity).
  *
