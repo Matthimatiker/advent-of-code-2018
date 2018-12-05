@@ -1,4 +1,5 @@
 declare type Polymer = string;
+declare type Unit = string;
 
 const lowerCaseCharacters : string[] = 'abcdefghijklmnopqrstuvwxyz'.split('');
 const reactingUnits = [];
@@ -32,7 +33,7 @@ export function react(polymer: Polymer): Polymer {
  * @param polymer
  * @param unit
  */
-export function removeUnit(polymer: Polymer, unit: string): Polymer {
+export function removeUnit(polymer: Polymer, unit: Unit): Polymer {
     const removeUnitRegExp = new RegExp(`(${unit.toLowerCase()}|${unit.toUpperCase()})`, 'g');
     return polymer.replace(removeUnitRegExp, '');
 }
