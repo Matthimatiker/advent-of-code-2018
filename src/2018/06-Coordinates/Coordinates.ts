@@ -6,3 +6,4 @@ export class Coordinate {
         return -1;
     }
 }
+
