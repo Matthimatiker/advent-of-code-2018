@@ -3,7 +3,7 @@ export class Coordinate {
     }
 
     public manhattanDistance(anotherCoordinate: Coordinate): number {
-        return -1;
+        return Math.abs(this.x - anotherCoordinate.x) + Math.abs(this.y - anotherCoordinate.y);
     }
 }
 
