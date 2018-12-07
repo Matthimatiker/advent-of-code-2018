@@ -58,4 +58,19 @@ describe('Coordinate', () => {
             expect(distance).to.equal(10);
         });
     });
+
+    describe('#from()', () => {
+        it('extracts correct coordinates', () => {
+            const coordinate = Coordinate.from('3, 5');
+
+            expect(coordinate.x).to.equal(3);
+            expect(coordinate.y).to.equal(5);
+        });
+
+        it('rejects invalid input', () => {
+            expect(() => {
+                Coordinate.from('buhuhu');
+            }).to.throw(Error);
+        });
+    });
 });
