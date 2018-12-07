@@ -1,9 +1,22 @@
 export class Coordinate {
+
+    /**
+     * Extracts a coordinate from a string in form "x, y", e.g. "5, 7".
+     *
+     * @param commaSeparatedCoordinates
+     */
     public static from(commaSeparatedCoordinates: string): Coordinate {
-        throw new Error("not implemented")
+        const [x, y] = commaSeparatedCoordinates.split(',').map((coordinateValue) => parseInt(coordinateValue.trim(), 10));
+        return new Coordinate(x, y);
     }
 
     constructor(public readonly x: number, public readonly y: number) {
+        if (!Number.isInteger(x)) {
+            throw new Error(`Invalid x coordinate value: Expected integer, but got: ${x}`);
+        }
+        if (!Number.isInteger(y)) {
+            throw new Error(`Invalid y coordinate value: Expected integer, but got: ${y}`);
+        }
     }
 
     public manhattanDistance(anotherCoordinate: Coordinate): number {
