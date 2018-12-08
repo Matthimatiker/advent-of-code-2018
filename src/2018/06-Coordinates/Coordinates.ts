@@ -45,6 +45,22 @@ export class Coordinate {
         return sortedByDistance[0];
     }
 
+    public above(coordinates: Coordinate[]): boolean {
+        return false;
+    }
+
+    public below(coordinates: Coordinate[]): boolean {
+        return false;
+    }
+
+    public left(coordinates: Coordinate[]): boolean {
+        return false;
+    }
+
+    public right(coordinates: Coordinate[]): boolean {
+        return false;
+    }
+
     public toString() {
         return `(${this.x},${this.y})`;
     }

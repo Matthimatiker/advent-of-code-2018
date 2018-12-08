@@ -95,6 +95,88 @@ describe('Coordinate', () => {
         });
     });
 
+    describe('#above()', () => {
+        const coordinates = [
+            new Coordinate(5, 4),
+            new Coordinate(2, 3)
+        ];
+
+        it('returns true if a coordinate is above', () => {
+            const coordinate = new Coordinate(3, 2);
+
+            expect(coordinate.above(coordinates)).to.equal(true);
+        });
+
+        it('returns false if there is no coordinate is above', () => {
+            const coordinate = new Coordinate(0, 1);
+
+            expect(coordinate.above(coordinates)).to.equal(false);
+        });
+
+        it('returns false if coordinate self is top coordinate in list', () => {
+            const coordinate = new Coordinate(2, 3);
+
+            expect(coordinate.above(coordinates)).to.equal(false);
+        });
+    });
+
+    describe('#below()', () => {
+        const coordinates = [
+            new Coordinate(5, 4),
+            new Coordinate(2, 3)
+        ];
+
+        it('returns true if a coordinate is below', () => {
+            const coordinate = new Coordinate(3, 2);
+
+            expect(coordinate.below(coordinates)).to.equal(true);
+        });
+
+        it('returns false if there is no coordinate is below', () => {
+            const coordinate = new Coordinate(6, 2);
+
+            expect(coordinate.below(coordinates)).to.equal(false);
+        });
+    });
+
+    describe('#left()', () => {
+        const coordinates = [
+            new Coordinate(5, 4),
+            new Coordinate(2, 3)
+        ];
+
+        it('returns true if a coordinate is left', () => {
+            const coordinate = new Coordinate(3, 4);
+
+            expect(coordinate.left(coordinates)).to.equal(true);
+        });
+
+        it('returns false if there is no coordinate is left', () => {
+            const coordinate = new Coordinate(3, 2);
+
+            expect(coordinate.left(coordinates)).to.equal(false);
+        });
+    });
+
+    describe('#right()', () => {
+        const coordinates = [
+            new Coordinate(5, 4),
+            new Coordinate(2, 3)
+        ];
+
+        it('returns true if a coordinate is right', () => {
+            const coordinate = new Coordinate(3, 2);
+
+            expect(coordinate.right(coordinates)).to.equal(true);
+        });
+
+        it('returns false if there is no coordinate is right', () => {
+            const coordinate = new Coordinate(3, 5);
+
+            expect(coordinate.right(coordinates)).to.equal(false);
+        });
+    });
+
     describe('#from()', () => {
         it('extracts correct coordinates', () => {
             const coordinate = Coordinate.from('3, 5');
