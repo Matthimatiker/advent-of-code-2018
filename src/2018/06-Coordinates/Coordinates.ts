@@ -23,6 +23,28 @@ export class Coordinate {
         return Math.abs(this.x - anotherCoordinate.x) + Math.abs(this.y - anotherCoordinate.y);
     }
 
+    /**
+     * From the given coordinates, this method returns the one that is nearest to this coordinate.
+     *
+     * Returns null when the two nearest coordinates have the same distance, then null is returned.
+     *
+     * @param coordinates
+     */
+    public nearest(coordinates: Coordinate[]): Coordinate|null {
+        if (coordinates.length === 0) {
+            return null;
+        }
+        if (coordinates.length === 1) {
+            return coordinates[0];
+        }
+        const sortedByDistance = coordinates.sort((left, right) => this.manhattanDistance(left) - this.manhattanDistance(right));
+        if (this.manhattanDistance(sortedByDistance[0]) === this.manhattanDistance(sortedByDistance[1])) {
+            // Returns null as it is not clear, which coordinate is the nearest.
+            return null;
+        }
+        return sortedByDistance[0];
+    }
+
     public toString() {
         return `(${this.x},${this.y})`;
     }

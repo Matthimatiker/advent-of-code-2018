@@ -59,6 +59,42 @@ describe('Coordinate', () => {
         });
     });
 
+    describe('#nearest()', () => {
+        const coordinate = new Coordinate(4, 5);
+
+        it('returns null if empty coordinate list is passed', () => {
+            expect(coordinate.nearest([])).to.equal(null);
+        });
+
+        it('returns nearest coordinate', () => {
+            const nearest = coordinate.nearest([
+                new Coordinate(10, 8),
+                new Coordinate(5,5),
+                new Coordinate(2, 2)
+            ]);
+
+            expect(nearest).to.deep.equal(new Coordinate(5,5));
+        });
+
+        it('returns nearest coordinate if single coordinate is passed', () => {
+            const nearest = coordinate.nearest([
+                new Coordinate(5,5),
+            ]);
+
+            expect(nearest).to.deep.equal(new Coordinate(5,5));
+        });
+
+        it('returns null if the two nearest coordinates have the same distance', () => {
+            const nearest = coordinate.nearest([
+                new Coordinate(10, 8),
+                new Coordinate(5,5),
+                new Coordinate(4, 4)
+            ]);
+
+            expect(nearest).to.equal(null);
+        });
+    });
+
     describe('#from()', () => {
         it('extracts correct coordinates', () => {
             const coordinate = Coordinate.from('3, 5');
