@@ -45,19 +45,39 @@ export class Coordinate {
         return sortedByDistance[0];
     }
 
-    public above(coordinates: Coordinate[]): boolean {
+    public anyAbove(coordinates: Coordinate[]): boolean {
+        for (let coordinate of coordinates) {
+            if (coordinate.y < this.y) {
+                return true;
+            }
+        }
         return false;
     }
 
-    public below(coordinates: Coordinate[]): boolean {
+    public anyBelow(coordinates: Coordinate[]): boolean {
+        for (let coordinate of coordinates) {
+            if (coordinate.y > this.y) {
+                return true;
+            }
+        }
         return false;
     }
 
-    public left(coordinates: Coordinate[]): boolean {
+    public anyLeft(coordinates: Coordinate[]): boolean {
+        for (let coordinate of coordinates) {
+            if (coordinate.x < this.x) {
+                return true;
+            }
+        }
         return false;
     }
 
-    public right(coordinates: Coordinate[]): boolean {
+    public anyRight(coordinates: Coordinate[]): boolean {
+        for (let coordinate of coordinates) {
+            if (coordinate.x > this.x) {
+                return true;
+            }
+        }
         return false;
     }
 

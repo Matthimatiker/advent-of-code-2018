@@ -95,32 +95,32 @@ describe('Coordinate', () => {
         });
     });
 
-    describe('#above()', () => {
+    describe('#anyAbove()', () => {
         const coordinates = [
             new Coordinate(5, 4),
             new Coordinate(2, 3)
         ];
 
         it('returns true if a coordinate is above', () => {
-            const coordinate = new Coordinate(3, 2);
+            const coordinate = new Coordinate(7, 4);
 
-            expect(coordinate.above(coordinates)).to.equal(true);
+            expect(coordinate.anyAbove(coordinates)).to.equal(true);
         });
 
         it('returns false if there is no coordinate is above', () => {
             const coordinate = new Coordinate(0, 1);
 
-            expect(coordinate.above(coordinates)).to.equal(false);
+            expect(coordinate.anyAbove(coordinates)).to.equal(false);
         });
 
         it('returns false if coordinate self is top coordinate in list', () => {
             const coordinate = new Coordinate(2, 3);
 
-            expect(coordinate.above(coordinates)).to.equal(false);
+            expect(coordinate.anyAbove(coordinates)).to.equal(false);
         });
     });
 
-    describe('#below()', () => {
+    describe('#anyBelow()', () => {
         const coordinates = [
             new Coordinate(5, 4),
             new Coordinate(2, 3)
@@ -129,17 +129,17 @@ describe('Coordinate', () => {
         it('returns true if a coordinate is below', () => {
             const coordinate = new Coordinate(3, 2);
 
-            expect(coordinate.below(coordinates)).to.equal(true);
+            expect(coordinate.anyBelow(coordinates)).to.equal(true);
         });
 
         it('returns false if there is no coordinate is below', () => {
-            const coordinate = new Coordinate(6, 2);
+            const coordinate = new Coordinate(6, 5);
 
-            expect(coordinate.below(coordinates)).to.equal(false);
+            expect(coordinate.anyBelow(coordinates)).to.equal(false);
         });
     });
 
-    describe('#left()', () => {
+    describe('#anyLeft()', () => {
         const coordinates = [
             new Coordinate(5, 4),
             new Coordinate(2, 3)
@@ -148,17 +148,17 @@ describe('Coordinate', () => {
         it('returns true if a coordinate is left', () => {
             const coordinate = new Coordinate(3, 4);
 
-            expect(coordinate.left(coordinates)).to.equal(true);
+            expect(coordinate.anyLeft(coordinates)).to.equal(true);
         });
 
         it('returns false if there is no coordinate is left', () => {
-            const coordinate = new Coordinate(3, 2);
+            const coordinate = new Coordinate(1, 2);
 
-            expect(coordinate.left(coordinates)).to.equal(false);
+            expect(coordinate.anyLeft(coordinates)).to.equal(false);
         });
     });
 
-    describe('#right()', () => {
+    describe('#anyRight()', () => {
         const coordinates = [
             new Coordinate(5, 4),
             new Coordinate(2, 3)
@@ -167,13 +167,13 @@ describe('Coordinate', () => {
         it('returns true if a coordinate is right', () => {
             const coordinate = new Coordinate(3, 2);
 
-            expect(coordinate.right(coordinates)).to.equal(true);
+            expect(coordinate.anyRight(coordinates)).to.equal(true);
         });
 
         it('returns false if there is no coordinate is right', () => {
-            const coordinate = new Coordinate(3, 5);
+            const coordinate = new Coordinate(6, 5);
 
-            expect(coordinate.right(coordinates)).to.equal(false);
+            expect(coordinate.anyRight(coordinates)).to.equal(false);
         });
     });
 
