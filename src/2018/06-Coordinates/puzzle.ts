@@ -111,3 +111,17 @@ coordinates
         console.log(`Coordinate ${coordinate} has area of ${areaByCoordinate[coordinate.toString()].length}`);
     });
 
+
+// Puzzle part 2.
+const safeRegion : Coordinate[] = [];
+grid.getCoordinates().forEach((regionCoordinate) => {
+    let sumOfDistances = 0;
+    for (let coordinate of coordinates) {
+        sumOfDistances += regionCoordinate.manhattanDistance(coordinate);
+    }
+    if (sumOfDistances >= 10000) {
+        return;
+    }
+    safeRegion.push(regionCoordinate);
+});
+console.log(`Size of safe region: ${safeRegion.length}`);
