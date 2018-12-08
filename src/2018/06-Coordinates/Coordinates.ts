@@ -22,6 +22,10 @@ export class Coordinate {
     public manhattanDistance(anotherCoordinate: Coordinate): number {
         return Math.abs(this.x - anotherCoordinate.x) + Math.abs(this.y - anotherCoordinate.y);
     }
+
+    public toString() {
+        return `(${this.x},${this.y})`;
+    }
 }
 
 export class BoundedGrid {
@@ -34,21 +38,42 @@ export class BoundedGrid {
      * @param coordinates
      */
     public static createEnclosing(coordinates: Coordinate[]): BoundedGrid {
-        throw new Error("not implemented")
+        if (coordinates.length === 0) {
+            throw new Error('Given coordinate list must not be empty.');
+        }
+        let topX = Number.POSITIVE_INFINITY;
+        let leftY = Number.POSITIVE_INFINITY;
+        let bottomX = Number.NEGATIVE_INFINITY;
+        let rightY = Number.NEGATIVE_INFINITY;
+        for (let coordinate of coordinates) {
+            topX = Math.min(topX, coordinate.x);
+            leftY = Math.min(leftY, coordinate.y);
+            bottomX = Math.max(bottomX, coordinate.x);
+            rightY = Math.max(rightY, coordinate.y);
+        }
+        return new BoundedGrid(new Coordinate(topX, leftY), new Coordinate(bottomX, rightY));
     }
 
     public constructor(public readonly topLeft: Coordinate, public readonly bottomRight: Coordinate) {
-
+        if (topLeft.x > bottomRight.x || topLeft.y > bottomRight.y) {
+            throw new Error(`Given top left ${topLeft} has invalid coordinate position when compared to bottom right ${bottomRight}.`)
+        }
     }
 
     public isOnEdge(coordinate: Coordinate): boolean {
-        return false;
+        return coordinate.x === this.topLeft.x || coordinate.x === this.bottomRight.x || coordinate.y === this.topLeft.y || coordinate.y === this.bottomRight.y;
     }
 
     /**
      * Returns all coordinates within the grid.
      */
     public getCoordinates(): Coordinate[] {
-        throw new Error("not implemented");
+        const coordinates = [];
+        for (let x = this.topLeft.x; x <= this.bottomRight.x; x++) {
+            for (let y = this.topLeft.y; y <= this.bottomRight.y; y++) {
+                coordinates.push(new Coordinate(x, y));
+            }
+        }
+        return coordinates;
     }
 }
