@@ -75,9 +75,37 @@ for (let gridCoordinate of grid.getCoordinates()) {
     areaByCoordinate[coordinateThatTheAreaBelongsTo.toString()].push(gridCoordinate);
 }
 
+// Find coordinates that own areas in the lines around the grid.
+// These are the coordinates that would expand infinitely.
+const coordinatesWithInfiniteAreas = new Set();
+for (let x = grid.topLeft.x - 1; x <= grid.bottomRight.x + 1; x++) {
+    const top = new Coordinate(x, grid.topLeft.y - 1);
+    const bottom = new Coordinate(x, grid.bottomRight.y + 1);
+    const nearestTop = top.nearest(coordinates);
+    const nearestBottom = bottom.nearest(coordinates);
+    if (nearestTop !== null) {
+        coordinatesWithInfiniteAreas.add(nearestTop);
+    }
+    if (nearestBottom !== null) {
+        coordinatesWithInfiniteAreas.add(nearestBottom);
+    }
+}
+for (let y = grid.topLeft.y - 1; y <= grid.bottomRight.y + 1; y++) {
+    const top = new Coordinate(grid.topLeft.x - 1, y);
+    const bottom = new Coordinate(grid.bottomRight.x + 1, y);
+    const nearestTop = top.nearest(coordinates);
+    const nearestBottom = bottom.nearest(coordinates);
+    if (nearestTop !== null) {
+        coordinatesWithInfiniteAreas.add(nearestTop);
+    }
+    if (nearestBottom !== null) {
+        coordinatesWithInfiniteAreas.add(nearestBottom);
+    }
+}
+
 coordinates
     // Remove coordinates with "infinite" areas.
-    .filter((coordinate) => coordinate.anyAbove(coordinates) && coordinate.anyLeft(coordinates) && coordinate.anyBelow(coordinates) && coordinate.anyRight(coordinates))
+    .filter((coordinate) => !coordinatesWithInfiniteAreas.has(coordinate))
     .sort((left, right) => areaByCoordinate[left.toString()].length - areaByCoordinate[right.toString()].length)
     .forEach((coordinate) => {
         console.log(`Coordinate ${coordinate} has area of ${areaByCoordinate[coordinate.toString()].length}`);
