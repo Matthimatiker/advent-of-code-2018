@@ -51,6 +51,14 @@ const puzzleInput = "137, 140\n" +
     "318, 315\n" +
     "296, 72";
 
+// Example values from puzzle description.
+// const puzzleInput ="1, 1\n" +
+//     "1, 6\n" +
+//     "8, 3\n" +
+//     "3, 4\n" +
+//     "5, 5\n" +
+//     "8, 9";
+
 const coordinates = puzzleInput.split("\n").map((line) => Coordinate.from(line));
 const grid = BoundedGrid.createEnclosing(coordinates);
 console.log(`Analyzed grid: ${grid.topLeft} to ${grid.bottomRight}`);
@@ -68,8 +76,8 @@ for (let gridCoordinate of grid.getCoordinates()) {
 }
 
 coordinates
-    // Remove "infinite" areas.
-    .filter((coordinate) => !grid.isOnEdge(coordinate))
+    // Remove coordinates with "infinite" areas.
+    .filter((coordinate) => coordinate.anyAbove(coordinates) && coordinate.anyLeft(coordinates) && coordinate.anyBelow(coordinates) && coordinate.anyRight(coordinates))
     .sort((left, right) => areaByCoordinate[left.toString()].length - areaByCoordinate[right.toString()].length)
     .forEach((coordinate) => {
         console.log(`Coordinate ${coordinate} has area of ${areaByCoordinate[coordinate.toString()].length}`);
