@@ -74,3 +74,41 @@ describe('Coordinate', () => {
         });
     });
 });
+
+describe('BoundedGrid', () => {
+    describe('constructor()', () => {
+        it('rejects coordinates if topLeft and bottomRight are swapped', () => {
+
+        });
+    });
+
+    describe('#isOnEdge()', () => {
+       it('returns true if given coordinate is top left', () => {
+
+       }) ;
+
+        it('returns true if given coordinate is in the middle of the right edge', () => {
+
+        }) ;
+
+        it('returns false if given coordinate is within grid', () => {
+
+        }) ;
+    });
+
+    describe('#getCoordinates()', () => {
+        it('returns all coordinates in the grid', () => {
+
+        });
+    });
+
+    describe('#createEnclosing()', () => {
+        it('throws exception if given coordinate list is empty', () => {
+
+        });
+
+        it('returns grid that spans all given coordinates', () => {
+
+        });
+    });
+});

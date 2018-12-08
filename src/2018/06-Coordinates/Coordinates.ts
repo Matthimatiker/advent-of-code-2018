@@ -44,4 +44,11 @@ export class BoundedGrid {
     public isOnEdge(coordinate: Coordinate): boolean {
         return false;
     }
+
+    /**
+     * Returns all coordinates within the grid.
+     */
+    public getCoordinates(): Coordinate[] {
+        throw new Error("not implemented");
+    }
 }
