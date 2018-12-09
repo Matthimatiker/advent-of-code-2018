@@ -51,6 +51,17 @@ describe('Step', () => {
         });
     });
 
+    describe('#duration()', () => {
+        it ('returns value depending on step name', () => {
+            expect(new Step('A').duration()).to.equal(1);
+            expect(new Step('Z').duration()).to.equal(26);
+        });
+
+        it('adds base duration', () => {
+            expect(new Step('A').duration(30)).to.equal(31);
+        });
+    });
+
     describe('#fromRules()', () => {
         it('returns steps without requirements', () => {
             const rules = [

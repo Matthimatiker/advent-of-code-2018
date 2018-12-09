@@ -35,12 +35,16 @@ export class Step {
         return steps;
     }
 
-    public constructor(public readonly name: StepName, public readonly requirements: StepName[]) {
+    public constructor(public readonly name: StepName, public readonly requirements: StepName[] = []) {
 
     }
 
     public requirementsFulfilledBy(alreadyCompleted: StepName[]) {
         return this.requirements.every((requirement) => alreadyCompleted.includes(requirement));
+    }
+
+    public duration(baseDuration: number = 0): number {
+        return 0;
     }
 }
 
