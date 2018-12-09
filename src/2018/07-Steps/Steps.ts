@@ -44,7 +44,9 @@ export class Step {
     }
 
     public duration(baseDuration: number = 0): number {
-        return 0;
+        const alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase();
+        const stepDuration = alphabet.indexOf(this.name) + 1;
+        return baseDuration + stepDuration;
     }
 }
 
@@ -64,4 +66,8 @@ export function order(steps: Step[]): Step[] {
         toDo = toDo.filter((step) => step !== nextStep);
     }
     return ordered;
+}
+
+export function orderParallel(steps: Step[], numberOfWorkers: number, baseDuration: number): Step[] {
+    throw new Error('not implemented');
 }
