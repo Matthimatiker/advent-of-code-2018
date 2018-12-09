@@ -45,5 +45,19 @@ export class Step {
 }
 
 export function order(steps: Step[]): Step[] {
-    throw new Error('Not implemented');
+    let toDo = steps;
+    const ordered: Step[] = [];
+    while (toDo.length !== 0) {
+        const alreadyDone = ordered.map((step) => step.name);
+        const ready = toDo
+            .filter((step) => step.requirementsFulfilledBy(alreadyDone))
+            .sort((left, right) => left.name.localeCompare(right.name));
+        if (ready.length === 0) {
+            throw new Error(`Cannot order steps: No more steps ready. Done: ${alreadyDone.join(', ')}, ToDo: ${toDo.map(step => step.name).join(', ')}`);
+        }
+        const nextStep = ready[0];
+        ordered.push(nextStep);
+        toDo = toDo.filter((step) => step !== nextStep);
+    }
+    return ordered;
 }
