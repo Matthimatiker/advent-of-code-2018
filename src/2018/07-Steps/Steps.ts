@@ -68,6 +68,39 @@ export function order(steps: Step[]): Step[] {
     return ordered;
 }
 
+interface Progress {
+    step: Step,
+    finishedAt: number
+}
+
 export function orderParallel(steps: Step[], numberOfWorkers: number, baseDuration: number): Step[] {
-    throw new Error('not implemented');
+    let toDo = steps;
+    const ordered: Step[] = [];
+    let inProgress: Progress[] = [];
+    let time = -1;
+    while (toDo.length !== 0 || inProgress.length > 0) {
+        time++;
+        const finished = inProgress.filter(progress => progress.finishedAt === time);
+        if (finished.length > 0) {
+            // Add finished steps to final list...
+            ordered.push(...finished.map(progress => progress.step));
+            // ... and remove them from the in-progress list.
+            inProgress = inProgress.filter(progress => !finished.includes(progress));
+        }
+        if (inProgress.length >= numberOfWorkers) {
+            // We do not have any capacity to process steps at this time.
+            continue;
+        }
+        const alreadyDone = ordered.map((step) => step.name);
+        const ready = toDo
+            .filter((step) => step.requirementsFulfilledBy(alreadyDone))
+            .sort((left, right) => left.name.localeCompare(right.name));
+        // Select as many new steps as possible.
+        const nextSteps = ready.slice(0, numberOfWorkers - inProgress.length);
+        inProgress.push(...nextSteps.map(step => {
+            return {step: step, finishedAt: time + step.duration(baseDuration)};
+        }));
+        toDo = toDo.filter((step) => !nextSteps.includes(step));
+    }
+    return ordered;
 }
