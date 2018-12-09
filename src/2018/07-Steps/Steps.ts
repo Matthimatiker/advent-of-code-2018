@@ -22,3 +22,7 @@ export class Step {
         return false;
     }
 }
+
+export function order(steps: Step[]): Step[] {
+    throw new Error('Not implemented');
+}
