@@ -1,4 +1,4 @@
-import {order, Rule, Step} from "./Steps";
+import {order, orderParallel, Rule, Step} from "./Steps";
 
 const puzzleInput = "Step F must be finished before step Q can begin.\n" +
     "Step A must be finished before step K can begin.\n" +
@@ -105,4 +105,7 @@ const puzzleInput = "Step F must be finished before step Q can begin.\n" +
 const rules = puzzleInput.split("\n").map((ruleLine) => Rule.from(ruleLine));
 const steps = Step.fromRules(rules);
 const ordered = order(steps);
-console.log(`Step order: ${ordered.map((step) => step.name).join('')}`);
+console.log(`Step order: ${ordered.map((step) => step.name).join('')}, ordered steps: ${ordered.length}`);
+
+const orderedParallel = orderParallel(steps, 5, 60);
+console.log(`Step parallel order: ${orderedParallel.map((step) => step.name).join('')}, ordered steps: ${orderedParallel.length}`);
