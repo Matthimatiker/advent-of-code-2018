@@ -73,7 +73,12 @@ interface Progress {
     finishedAt: number
 }
 
-export function orderParallel(steps: Step[], numberOfWorkers: number, baseDuration: number): Step[] {
+interface ParallelOrderResult {
+    steps: Step[],
+    time: number
+}
+
+export function orderParallel(steps: Step[], numberOfWorkers: number, baseDuration: number): ParallelOrderResult {
     let toDo = steps;
     const ordered: Step[] = [];
     let inProgress: Progress[] = [];
@@ -102,5 +107,5 @@ export function orderParallel(steps: Step[], numberOfWorkers: number, baseDurati
         }));
         toDo = toDo.filter((step) => !nextSteps.includes(step));
     }
-    return ordered;
+    return {steps: ordered, time: time};
 }

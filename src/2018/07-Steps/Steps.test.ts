@@ -126,8 +126,25 @@ describe('#orderParallel()', () => {
 
         const ordered = orderParallel(steps, 2, 0);
 
-        const output = ordered.map((step) => step.name).join('');
+        const output = ordered.steps.map((step) => step.name).join('');
         expect(output).to.equal('CABFDE');
+    });
+
+    it('returns correct time for example scenario', () => {
+        const rules = [
+            'Step C must be finished before step A can begin.',
+            'Step C must be finished before step F can begin.',
+            'Step A must be finished before step B can begin.',
+            'Step A must be finished before step D can begin.',
+            'Step B must be finished before step E can begin.',
+            'Step D must be finished before step E can begin.',
+            'Step F must be finished before step E can begin.'
+        ].map((ruleDescription) => Rule.from(ruleDescription));
+        const steps = Step.fromRules(rules);
+
+        const ordered = orderParallel(steps, 2, 0);
+
+        expect(ordered.time).to.equal(15);
     });
 
     it('returns same value as order() when single worker is used', () => {
@@ -145,7 +162,7 @@ describe('#orderParallel()', () => {
         const orderedParallel = orderParallel(steps, 1, 0);
         const ordered = order(steps);
 
-        const output = orderedParallel.map((step) => step.name).join('');
+        const output = orderedParallel.steps.map((step) => step.name).join('');
         expect(output).to.equal(ordered.map((step) => step.name).join(''));
     });
 });

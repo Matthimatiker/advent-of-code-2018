@@ -108,4 +108,4 @@ const ordered = order(steps);
 console.log(`Step order: ${ordered.map((step) => step.name).join('')}, ordered steps: ${ordered.length}`);
 
 const orderedParallel = orderParallel(steps, 5, 60);
-console.log(`Step parallel order: ${orderedParallel.map((step) => step.name).join('')}, ordered steps: ${orderedParallel.length}`);
+console.log(`Step parallel order: ${orderedParallel.steps.map((step) => step.name).join('')}, time: ${orderedParallel.time}, ordered steps: ${orderedParallel.steps.length}`);
