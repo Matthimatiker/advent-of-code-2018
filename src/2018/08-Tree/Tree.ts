@@ -3,7 +3,13 @@ export class Node {
         public readonly children: Node[],
         public readonly metadata: number[]
     ) {
+    }
 
+    /**
+     * Returns the sum of the metadata in this node and all of its child nodes.
+     */
+    public metadataSum(): number {
+        return 0
     }
 }
 
