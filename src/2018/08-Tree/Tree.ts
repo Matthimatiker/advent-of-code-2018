@@ -1,6 +1,7 @@
 export class Node {
     public constructor(
-        public readonly children: Node[], metadata: number[]
+        public readonly children: Node[],
+        public readonly metadata: number[]
     ) {
 
     }
