@@ -9,7 +9,11 @@ export class Node {
      * Returns the sum of the metadata in this node and all of its child nodes.
      */
     public metadataSum(): number {
-        return 0
+        return this.sum(this.children.map(node => node.metadataSum())) + this.sum(this.metadata);
+    }
+
+    private sum(entries: number[]): number {
+        return entries.reduce(((previousValue, currentValue) => previousValue + currentValue), 0);
     }
 }
 
