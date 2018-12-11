@@ -7,6 +7,14 @@
     "@babel/proposal-class-properties",
     "@babel/proposal-object-rest-spread",
     "@babel/plugin-transform-regenerator",
-    "@babel/plugin-transform-runtime"
+    "@babel/plugin-transform-runtime",
+    [
+      "babel-plugin-inline-import",
+      {
+        "extensions": [
+          ".txt"
+        ]
+      }
+    ]
   ]
 }
