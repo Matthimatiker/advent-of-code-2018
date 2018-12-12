@@ -31,4 +31,10 @@ describe('Node', () => {
             expect(root.metadataSum()).to.equal(1 + 1 + 2 + 10 + 11 + 12 + 2 + 99);
         });
     });
+
+    describe('#childDependentSum()', () => {
+        it('returns correct value', () => {
+            expect(root.childDependentSum()).to.equal(66);
+        });
+    });
 });

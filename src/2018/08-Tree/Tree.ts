@@ -12,6 +12,20 @@ export class Node {
         return this.sum(this.children.map(node => node.metadataSum())) + this.sum(this.metadata);
     }
 
+    public childDependentSum(): number {
+        if (this.children.length === 0) {
+            return this.sum(this.metadata);
+        }
+        const childValues = this.metadata.map(value => {
+            const childIndex = value - 1;
+            if (childIndex < 0 || childIndex >= this.children.length) {
+                return 0;
+            }
+            return this.children[childIndex].childDependentSum();
+        });
+        return this.sum(childValues);
+    }
+
     private sum(entries: number[]): number {
         return entries.reduce(((previousValue, currentValue) => previousValue + currentValue), 0);
     }
