@@ -8,9 +8,11 @@ declare type MarbleIndex = number;
 
 export class MarbleCircle {
 
-    public readonly marbles: Marble[];
+    public marbles: Marble[];
 
     private currentMarbleIndex: MarbleIndex;
+
+    private turn: number = 0;
 
     public constructor() {
         this.marbles = [new Marble(0)];
@@ -18,23 +20,39 @@ export class MarbleCircle {
     }
 
     public getCurrentMarble(): Marble {
-        throw new Error("not implemented")
+        return this.marbles[this.currentMarbleIndex];
     }
 
     public place(marble: Marble): Marble[] {
-        throw new Error("not implemented")
+        this.turn++;
+        if (marble.value % 23 === 0) {
+            this.currentMarbleIndex = this.counterClockwise(7);
+            const removedMarble = this.marbles[this.currentMarbleIndex];
+            this.marbles = [...this.marbles.slice(0, this.currentMarbleIndex), ...this.marbles.slice(this.currentMarbleIndex + 1)];
+            return [removedMarble, marble];
+        }
+        this.currentMarbleIndex = this.clockwise(2);
+        this.marbles = [...this.marbles.slice(0, this.currentMarbleIndex), marble, ...this.marbles.slice(this.currentMarbleIndex)];
+        return [];
     }
 
     public getTurn(): number {
-        return -1;
+        return this.turn;
     }
 
     private clockwise(steps: number): MarbleIndex {
-        throw new Error("not implemented");
+        return (this.currentMarbleIndex + steps) % this.marbles.length;
     }
 
     private counterClockwise(steps: number): MarbleIndex {
-        throw new Error("not implemented");
+        let index = this.currentMarbleIndex - steps;
+        if (index >= 0) {
+            return index;
+        }
+        while (index < 0) {
+            index += this.marbles.length;
+        }
+        return index;
     }
 }
 
@@ -76,8 +94,9 @@ export class Game {
     public play(): Player {
         const circle = new MarbleCircle();
         for (let marble of this.marbles) {
-
+            const activePlayer = this.players[circle.getTurn() % this.players.length];
+            circle.place(marble).forEach(receivedMarble => activePlayer.keep(receivedMarble));
         }
-        throw new Error("not implemented");
+        return this.players.sort((left, right) => left.getScore() - right.getScore()).reverse()[0];
     }
 }
