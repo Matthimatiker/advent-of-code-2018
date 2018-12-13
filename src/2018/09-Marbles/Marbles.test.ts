@@ -45,6 +45,31 @@ describe('MarbleCircle', () => {
             expect(received).to.have.lengthOf(2);
         });
     });
+
+    describe('#getTurn()', () => {
+        it('returns initially 0', () => {
+            const circle = new MarbleCircle();
+
+            expect(circle.getTurn()).to.equal(0);
+        });
+
+        it('returns correct value if some marbles have been placed', () => {
+            const circle = new MarbleCircle();
+            circle.place(new Marble(1));
+            circle.place(new Marble(2));
+
+            expect(circle.getTurn()).to.equal(2);
+        });
+
+        it('returns correct value if some marbles have been removed', () => {
+            const circle = new MarbleCircle();
+            for (let i = 1; i <= 40; i++) {
+                circle.place(new Marble(i));
+            }
+
+            expect(circle.getTurn()).to.equal(40);
+        });
+    });
 });
 
 describe('Game', () => {
