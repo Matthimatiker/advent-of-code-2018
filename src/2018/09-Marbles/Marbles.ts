@@ -8,7 +8,7 @@ declare type MarbleIndex = number;
 
 export class MarbleCircle {
 
-    private marbles: Marble[];
+    public readonly marbles: Marble[];
 
     private currentMarbleIndex: MarbleIndex;
 
@@ -35,8 +35,11 @@ export class MarbleCircle {
 }
 
 export class Player {
-    public keep(marble: Marble) {
 
+    public readonly marbles: Marble[] = [];
+
+    public keep(marble: Marble) {
+        this.marbles.push(marble);
     }
 
     public getScore(): number {
