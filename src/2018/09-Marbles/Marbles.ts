@@ -27,12 +27,11 @@ export class MarbleCircle {
         this.turn++;
         if (marble.value % 23 === 0) {
             this.currentMarbleIndex = this.counterClockwise(7);
-            const removedMarble = this.marbles[this.currentMarbleIndex];
-            this.marbles = [...this.marbles.slice(0, this.currentMarbleIndex), ...this.marbles.slice(this.currentMarbleIndex + 1)];
+            const removedMarble = this.marbles.splice(this.currentMarbleIndex, 1)[0];
             return [removedMarble, marble];
         }
         this.currentMarbleIndex = this.clockwise(2);
-        this.marbles = [...this.marbles.slice(0, this.currentMarbleIndex), marble, ...this.marbles.slice(this.currentMarbleIndex)];
+        this.marbles.splice(this.currentMarbleIndex, 0, marble);
         return [];
     }
 
