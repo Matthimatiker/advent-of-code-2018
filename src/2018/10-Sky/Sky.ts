@@ -18,6 +18,10 @@ export class Velocity {
 }
 
 export class Light {
+    public static fromText(definition: string): Light {
+        throw new Error("not implemented");
+    }
+
     public constructor(public readonly initialPosition: Position, public readonly velocity: Velocity) {
     }
 }
@@ -29,12 +33,16 @@ export class Observer {
     }
 
     public after(seconds: number): Sky {
-        throw new Error("not implemented")
+        throw new Error("not implemented");
     }
 }
 
 export class Sky {
+    public mayContainWord(): boolean {
+        return false;
+    }
+
     public toString(): string {
-        throw new Error("not implemented")
+        throw new Error("not implemented");
     }
 }
