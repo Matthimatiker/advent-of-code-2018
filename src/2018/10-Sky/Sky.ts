@@ -38,6 +38,10 @@ export class Observer {
 }
 
 export class Sky {
+    public constructor(public readonly pointsOfLight: Position[]) {
+
+    }
+
     public mayContainWord(): boolean {
         return false;
     }
