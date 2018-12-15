@@ -82,21 +82,14 @@ export class Sky {
         if (this.pointsOfLight.length === 0) {
             return '.';
         }
-        let minX: number = Number.POSITIVE_INFINITY;
-        let maxX: number = Number.NEGATIVE_INFINITY;
-        let minY: number = Number.POSITIVE_INFINITY;
-        let maxY: number = Number.NEGATIVE_INFINITY;
         const lightAt: {[key: string]: boolean} = {};
-        this.pointsOfLight.forEach(position => {
-            minX = Math.min(minX, position.x);
-            maxX = Math.max(maxX, position.x);
-            minY = Math.min(minY, position.y);
-            maxY = Math.max(maxY, position.y);
+        this.pointsOfLight.forEach(position => {;
             lightAt[`${position.x},${position.y}`] = true;
         });
+        const dimension = this.getDimension();
         let representationParts = [];
-        for (let y = minY; y <= maxY; y++) {
-            for (let x = minX; x <= maxX; x++) {
+        for (let y = dimension.topLeft.y; y <= dimension.bottomRight.y; y++) {
+            for (let x = dimension.topLeft.x; x <= dimension.bottomRight.x; x++) {
                 representationParts.push((`${x},${y}` in lightAt) ? '#' : '.');
             }
             representationParts.push("\n");
@@ -104,5 +97,22 @@ export class Sky {
         return representationParts.join('');
     }
 
+    private getDimension(): Dimension {
+        let minX: number = Number.POSITIVE_INFINITY;
+        let maxX: number = Number.NEGATIVE_INFINITY;
+        let minY: number = Number.POSITIVE_INFINITY;
+        let maxY: number = Number.NEGATIVE_INFINITY;
+        this.pointsOfLight.forEach(position => {
+            minX = Math.min(minX, position.x);
+            maxX = Math.max(maxX, position.x);
+            minY = Math.min(minY, position.y);
+            maxY = Math.max(maxY, position.y);
+        });
+        return new Dimension(new Position(minX, minY), new Position(maxX, maxY))
+    }
+}
 
+export class Dimension {
+    public constructor(public readonly topLeft: Position, public readonly bottomRight: Position) {
+    }
 }
