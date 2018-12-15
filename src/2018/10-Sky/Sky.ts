@@ -50,14 +50,15 @@ export class Observer {
     public after(seconds: number): Sky {
         return new Sky(this.lights.map(light => light.initialPosition.moveBy(light.velocity.multiplyBy(seconds))));
     }
+
+    public static sortByWordProbability(skies: Sky[]): Sky[] {
+        throw new Error("not implemented")
+    }
 }
 
 export class Sky {
-    public constructor(public readonly pointsOfLight: Position[]) {
-    }
 
-    public mayContainWord(): boolean {
-        return false;
+    public constructor(public readonly pointsOfLight: Position[]) {
     }
 
     public toString(): string {
