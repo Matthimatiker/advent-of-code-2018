@@ -97,7 +97,7 @@ describe('Observer', () => {
             "#...#...#.\n" +
             "#...#...#.\n" +
             "#...#...#.\n" +
-            "#...#..###";
+            "#...#..###\n";
         expect(observer.after(3).toString()).to.equal(expected);
     });
 });
