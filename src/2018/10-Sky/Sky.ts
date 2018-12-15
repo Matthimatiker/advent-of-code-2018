@@ -94,13 +94,15 @@ export class Sky {
             maxY = Math.max(maxY, position.y);
             lightAt[`${position.x},${position.y}`] = true;
         });
-        let representation = '';
+        let representationParts = [];
         for (let y = minY; y <= maxY; y++) {
             for (let x = minX; x <= maxX; x++) {
-                representation += (`${x},${y}` in lightAt) ? '#' : '.';
+                representationParts.push((`${x},${y}` in lightAt) ? '#' : '.');
             }
-            representation += "\n";
+            representationParts.push("\n");
         }
-        return representation;
+        return representationParts.join('');
     }
+
+
 }
