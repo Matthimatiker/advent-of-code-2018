@@ -5,6 +5,10 @@ export class Position {
     public moveBy(velocity: Velocity): Position {
         return new Position(this.x + velocity.x, this.y + velocity.y);
     }
+
+    public distanceTo(anotherPosition: Position): number {
+        return Math.sqrt(Math.pow(this.x - anotherPosition.x, 2) + Math.pow(this.y - anotherPosition.y, 2));
+    }
 }
 
 export class Velocity {

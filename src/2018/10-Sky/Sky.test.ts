@@ -25,6 +25,24 @@ describe('Position', () => {
             expect(newPosition.y).to.equal(3);
         });
     });
+
+    describe('#distanceTo()', () => {
+        it('returns 0 when compared to self', () => {
+            const position = new Position(-3, 2);
+
+            const distance = position.distanceTo(position);
+
+            expect(distance).to.equal(0.0);
+        });
+
+        it('returns larger value when position is more distant', () => {
+            const position = new Position(-3, 2);
+            const near = new Position(-2, 1);
+            const farAway = new Position(8, -9);
+
+            expect(position.distanceTo(near)).to.be.lessThan(position.distanceTo(farAway));
+        });
+    });
 });
 
 describe('Light', () => {
