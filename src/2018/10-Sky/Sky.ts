@@ -56,7 +56,7 @@ export class Observer {
     }
 
     public static sortByWordProbability(skies: Sky[]): Sky[] {
-        return skies.sort((left, right) => left.sumOfDistances() - right.sumOfDistances());
+        return skies.sort((left, right) => left.getDimension().size() - right.getDimension().size());
     }
 }
 
@@ -97,7 +97,7 @@ export class Sky {
         return representationParts.join('');
     }
 
-    private getDimension(): Dimension {
+    public getDimension(): Dimension {
         let minX: number = Number.POSITIVE_INFINITY;
         let maxX: number = Number.NEGATIVE_INFINITY;
         let minY: number = Number.POSITIVE_INFINITY;
@@ -114,5 +114,9 @@ export class Sky {
 
 export class Dimension {
     public constructor(public readonly topLeft: Position, public readonly bottomRight: Position) {
+    }
+
+    public size(): number {
+        return (this.bottomRight.x - this.topLeft.x) * (this.bottomRight.y - this.topLeft.y);
     }
 }
