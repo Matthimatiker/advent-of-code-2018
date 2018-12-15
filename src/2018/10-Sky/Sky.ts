@@ -56,7 +56,11 @@ export class Observer {
     }
 
     public static sortByWordProbability(skies: Sky[]): Sky[] {
-        return skies.sort((left, right) => left.getDimension().size() - right.getDimension().size());
+        return skies.sort(this.dimensionComparator);
+    }
+
+    public static dimensionComparator(left: Sky, right: Sky): number {
+        return left.getDimension().size() - right.getDimension().size();
     }
 }
 
