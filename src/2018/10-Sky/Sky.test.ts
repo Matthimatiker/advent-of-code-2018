@@ -42,6 +42,13 @@ describe('Position', () => {
 
             expect(position.distanceTo(near)).to.be.lessThan(position.distanceTo(farAway));
         });
+
+        it('returns same value for a.distanceTo(b) and b.distanceTo(a)', () => {
+            const position = new Position(-3, 2);
+            const anotherPosition = new Position(-2, 1);
+
+            expect(position.distanceTo(anotherPosition)).to.equal(anotherPosition.distanceTo(position));
+        });
     });
 });
 

@@ -56,13 +56,26 @@ export class Observer {
     }
 
     public static sortByWordProbability(skies: Sky[]): Sky[] {
-        throw new Error("not implemented")
+        return skies.sort((left, right) => left.sumOfDistances() - right.sumOfDistances());
     }
 }
 
 export class Sky {
 
     public constructor(public readonly pointsOfLight: Position[]) {
+    }
+
+    /**
+     * Some of distances between *all* pointsOfLight.
+     */
+    public sumOfDistances(): number {
+        let sum = 0;
+        for (let pointA of this.pointsOfLight) {
+            for (let pointB of this.pointsOfLight) {
+                sum += pointA.distanceTo(pointB);
+            }
+        }
+        return sum;
     }
 
     public toString(): string {
