@@ -7,6 +7,15 @@ export class CellPosition {
     }
 }
 
+export class GridSize {
+    public constructor(public readonly x: number, public readonly y: number) {
+    }
+
+    public toString(): string {
+        return `(${this.x}x${this.y})`;
+    }
+}
+
 export class Grid {
 
     public constructor(private gridSerialNumber: number, public readonly topLeft: CellPosition, private bottomRight: CellPosition) {
@@ -33,6 +42,10 @@ export class Grid {
             }
         }
         return power;
+    }
+
+    public getSize(): GridSize {
+        return new GridSize(this.bottomRight.x - this.topLeft.x + 1, this.bottomRight.y - this.topLeft.y + 1);
     }
 
     /**

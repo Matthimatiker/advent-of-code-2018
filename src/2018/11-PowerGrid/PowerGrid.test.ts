@@ -61,4 +61,15 @@ describe('Grid', () => {
 
         }
     });
+
+    describe('#getSize()', () => {
+        it('returns correct value', () => {
+            const grid = new Grid(42, new CellPosition(1, 1), new CellPosition(200, 300));
+
+            const size = grid.getSize();
+
+            expect(size.x).to.equal(200);
+            expect(size.y).to.equal(300);
+        });
+    });
 });
