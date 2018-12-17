@@ -72,4 +72,35 @@ describe('Grid', () => {
             expect(size.y).to.equal(300);
         });
     });
+
+
+    describe('finds correct square of any size with largest power', () => {
+        const examples = [
+            {
+                gridSerial: 18,
+                expectedTopLeft: new CellPosition(90, 269),
+                expectedSize: 16,
+                expectedTotalPower: 113
+            },
+            {
+                gridSerial: 42,
+                expectedTopLeft: new CellPosition(232, 251),
+                expectedSize: 12,
+                expectedTotalPower: 119
+            }
+        ];
+        for (let example of examples) {
+            it(`for grid with serial number ${example.gridSerial}`, () => {
+                const grid = new Grid(example.gridSerial, new CellPosition(1, 1), new CellPosition(300, 300));
+
+                const square = grid.getSquareOfAnySizeWithLargestTotalPower();
+
+                expect(square.topLeft).to.deep.equal(example.expectedTopLeft);
+                expect(square.getTotalPower()).to.equal(example.expectedTotalPower);
+                expect(square.getSize().x).to.equal(example.expectedSize);
+                expect(square.getSize().y).to.equal(example.expectedSize);
+            });
+
+        }
+    });
 });

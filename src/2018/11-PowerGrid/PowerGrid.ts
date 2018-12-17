@@ -18,7 +18,15 @@ export class GridSize {
 
 export class Grid {
 
+    /**
+     * Total power, if already calculated.
+     */
+    private totalPower: number|null = null;
+
+    private readonly size: GridSize;
+
     public constructor(private gridSerialNumber: number, public readonly topLeft: CellPosition, private bottomRight: CellPosition) {
+        this.size = new GridSize(bottomRight.x - topLeft.x + 1, bottomRight.y - topLeft.y + 1)
     }
 
     public getPowerLevelAt(position: CellPosition): number {
@@ -35,30 +43,51 @@ export class Grid {
     }
 
     public getTotalPower(): number {
-        let power = 0;
-        for (let x = this.topLeft.x; x <= this.bottomRight.x; x++) {
-            for (let y = this.topLeft.y; y <= this.bottomRight.y; y++) {
-                power += this.getPowerLevelAt(new CellPosition(x, y));
+        if (this.totalPower === null) {
+            let power = 0;
+            for (let x = this.topLeft.x; x <= this.bottomRight.x; x++) {
+                for (let y = this.topLeft.y; y <= this.bottomRight.y; y++) {
+                    power += this.getPowerLevelAt(new CellPosition(x, y));
+                }
             }
+            this.totalPower = power;
         }
-        return power;
+        return this.totalPower;
     }
 
     public getSize(): GridSize {
-        return new GridSize(this.bottomRight.x - this.topLeft.x + 1, this.bottomRight.y - this.topLeft.y + 1);
+        return this.size;
     }
 
     /**
      * Returns the 3x3 square with largest power in this grid.
      */
-    public getSquareWithLargestTotalPower(): Grid {
-        const possibleSquares = [];
-        for (let x = this.topLeft.x; x <= this.bottomRight.x - 2; x++) {
-            for (let y = this.topLeft.y; y <= this.bottomRight.y - 2; y++) {
-                const square = new Grid(this.gridSerialNumber, new CellPosition(x, y), new CellPosition(x + 2, y + 2));
-                possibleSquares.push(square);
+    public getSquareWithLargestTotalPower(size = 3): Grid {
+        let squareWithLargestPower = null;
+        for (let x = this.topLeft.x; x <= this.bottomRight.x - size + 1; x++) {
+            for (let y = this.topLeft.y; y <= this.bottomRight.y - size + 1; y++) {
+                const square = new Grid(this.gridSerialNumber, new CellPosition(x, y), new CellPosition(x + size - 1, y + size - 1));
+                if (squareWithLargestPower === null) {
+                    squareWithLargestPower = square;
+                } else if (squareWithLargestPower.getTotalPower() < square.getTotalPower()) {
+                    squareWithLargestPower = square;
+                }
             }
         }
-        return possibleSquares.sort((left, right) => -1 * (left.getTotalPower() - right.getTotalPower()))[0];
+        return squareWithLargestPower!;
+    }
+
+    public getSquareOfAnySizeWithLargestTotalPower(): Grid {
+        let squareWithLargestPower = null;
+        // This assumes that the grid itself is a square, which is ok for the puzzle.
+        for (let size = 1; size <= this.getSize().x; size++) {
+            const square = this.getSquareWithLargestTotalPower(size);
+            if (squareWithLargestPower === null) {
+                squareWithLargestPower = square;
+            } else if (squareWithLargestPower.getTotalPower() < square.getTotalPower()) {
+                squareWithLargestPower = square;
+            }
+        }
+        return squareWithLargestPower!;
     }
 }
