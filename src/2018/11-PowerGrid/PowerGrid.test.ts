@@ -109,8 +109,7 @@ describe('Grid', () => {
                 expect(square.getTotalPower()).to.equal(example.expectedTotalPower);
                 expect(square.getSize().x).to.equal(example.expectedSize);
                 expect(square.getSize().y).to.equal(example.expectedSize);
-            });
-
+            }).timeout(180000);
         }
     });
 });
