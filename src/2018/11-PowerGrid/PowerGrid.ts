@@ -27,6 +27,13 @@ export class Grid {
 
     private readonly cellPower: number[][];
 
+    /**
+     *
+     * @param gridSerialNumber
+     * @param topLeft
+     * @param bottomRight
+     * @param cellPower If already calculated, cell power values can be passed in. Only for internal usage.
+     */
     public constructor(private gridSerialNumber: number, public readonly topLeft: CellPosition, private bottomRight: CellPosition, cellPower: number[][]|null = null) {
         this.size = new GridSize(bottomRight.x - topLeft.x + 1, bottomRight.y - topLeft.y + 1);
         if (cellPower === null) {
