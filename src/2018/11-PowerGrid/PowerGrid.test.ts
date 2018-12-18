@@ -60,6 +60,16 @@ describe('Grid', () => {
             });
 
         }
+
+        it('finds correct square of size 300', () => {
+            const grid = new Grid(18, new CellPosition(1, 1), new CellPosition(300, 300));
+
+            // This should be basically the grid itself.
+            const square = grid.getSquareWithLargestTotalPower(300);
+
+            expect(grid.getSize()).to.deep.equal(square.getSize());
+            expect(grid.getTotalPower()).to.equal(square.getTotalPower());
+        });
     });
 
     describe('#getSize()', () => {

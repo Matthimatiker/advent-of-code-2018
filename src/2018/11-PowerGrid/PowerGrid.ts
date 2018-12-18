@@ -25,21 +25,24 @@ export class Grid {
 
     private readonly size: GridSize;
 
-    public constructor(private gridSerialNumber: number, public readonly topLeft: CellPosition, private bottomRight: CellPosition) {
-        this.size = new GridSize(bottomRight.x - topLeft.x + 1, bottomRight.y - topLeft.y + 1)
+    private readonly cellPower: number[][];
+
+    public constructor(private gridSerialNumber: number, public readonly topLeft: CellPosition, private bottomRight: CellPosition, cellPower: number[][]|null = null) {
+        this.size = new GridSize(bottomRight.x - topLeft.x + 1, bottomRight.y - topLeft.y + 1);
+        if (cellPower === null) {
+            cellPower = new Array(this.size.x);
+            for (let x = this.topLeft.x; x <= this.bottomRight.x; x++) {
+                cellPower[x] = new Array(this.size.y);
+                for (let y = this.topLeft.y; y <= this.bottomRight.y; y++) {
+                    cellPower[x][y] = this.calculatePowerLevelAt(x, y);
+                }
+            }
+        }
+        this.cellPower = cellPower;
     }
 
     public getPowerLevelAt(position: CellPosition): number {
-        const rackId = position.x + 10;
-        let powerLevel = rackId * position.y;
-        powerLevel += this.gridSerialNumber;
-        powerLevel *= rackId;
-        const powerLevelAsString = powerLevel.toString(10);
-        if (powerLevelAsString.length < 3) {
-            return 0;
-        }
-        const hundredsDigit = parseInt(powerLevelAsString.charAt(powerLevelAsString.length - 3), 10);
-        return hundredsDigit - 5;
+        return this.getPowerLevelByCoordinate(position.x, position.y);
     }
 
     public getTotalPower(): number {
@@ -47,7 +50,7 @@ export class Grid {
             let power = 0;
             for (let x = this.topLeft.x; x <= this.bottomRight.x; x++) {
                 for (let y = this.topLeft.y; y <= this.bottomRight.y; y++) {
-                    power += this.getPowerLevelAt(new CellPosition(x, y));
+                    power += this.getPowerLevelByCoordinate(x, y);
                 }
             }
             this.totalPower = power;
@@ -62,11 +65,11 @@ export class Grid {
     /**
      * Returns the 3x3 square with largest power in this grid.
      */
-    public getSquareWithLargestTotalPower(size = 3): Grid {
+    public getSquareWithLargestTotalPower(size: number = 3): Grid {
         let squareWithLargestPower = null;
         for (let x = this.topLeft.x; x <= this.bottomRight.x - size + 1; x++) {
             for (let y = this.topLeft.y; y <= this.bottomRight.y - size + 1; y++) {
-                const square = new Grid(this.gridSerialNumber, new CellPosition(x, y), new CellPosition(x + size - 1, y + size - 1));
+                const square = new Grid(this.gridSerialNumber, new CellPosition(x, y), new CellPosition(x + size - 1, y + size - 1), this.cellPower);
                 if (squareWithLargestPower === null) {
                     squareWithLargestPower = square;
                 } else if (squareWithLargestPower.getTotalPower() < square.getTotalPower()) {
@@ -89,5 +92,22 @@ export class Grid {
             }
         }
         return squareWithLargestPower!;
+    }
+
+    private calculatePowerLevelAt(x: number, y: number): number {
+        const rackId = x + 10;
+        let powerLevel = rackId * y;
+        powerLevel += this.gridSerialNumber;
+        powerLevel *= rackId;
+        const powerLevelAsString = powerLevel.toString(10);
+        if (powerLevelAsString.length < 3) {
+            return 0;
+        }
+        const hundredsDigit = parseInt(powerLevelAsString.charAt(powerLevelAsString.length - 3), 10);
+        return hundredsDigit - 5;
+    }
+
+    private getPowerLevelByCoordinate(x: number, y: number): number {
+        return this.cellPower[x][y];
     }
 }
