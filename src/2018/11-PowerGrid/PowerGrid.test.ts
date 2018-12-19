@@ -100,7 +100,7 @@ describe('Grid', () => {
             }
         ];
         for (let example of examples) {
-            it(`for grid with serial number ${example.gridSerial}`, () => {
+            it.skip(`for grid with serial number ${example.gridSerial}`, () => {
                 const grid = new Grid(example.gridSerial, new CellPosition(1, 1), new CellPosition(300, 300));
 
                 const square = grid.getSquareOfAnySizeWithLargestTotalPower();
