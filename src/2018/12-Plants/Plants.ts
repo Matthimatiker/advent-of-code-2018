@@ -1,5 +1,8 @@
 type HasPlant = boolean;
 
+export const PLANT = true;
+export const NO_PLANT = false;
+
 export class Pots {
     public static fromState(state: string): Pots {
         throw new Error("Not implemented");
@@ -9,6 +12,13 @@ export class Pots {
     }
 
     public sumOfPotNumbersWithPlant(): number {
+        throw new Error("Not implemented");
+    }
+
+    /**
+     * Removes empty pots from the left and right.
+     */
+    public trim(): Pots {
         throw new Error("Not implemented");
     }
 
@@ -22,7 +32,7 @@ export class Rule {
         throw new Error("Not implemented");
     }
 
-    public constructor(pattern: HasPlant[], result: HasPlant) {
+    public constructor(public readonly pattern: HasPlant[], public readonly result: HasPlant) {
     }
 }
 
@@ -30,7 +40,7 @@ export class Rules {
     public constructor(private rules: Rule[]) {
     }
 
-    public apply(pots: Pots): Pots {
+    public apply(pots: Pots, generations: number = 1): Pots {
         throw new Error("Not implemented");
     }
 }
