@@ -18,6 +18,15 @@ describe('Pots', () => {
 
             expect(trimmed.initialPotIndex).to.equal(1);
         });
+
+        it('returns correct value if pots are all empty', () => {
+            const pots = new Pots([NO_PLANT, NO_PLANT, NO_PLANT]);
+
+            const trimmed = pots.trim();
+
+            expect(trimmed.pots).to.deep.equal([]);
+            expect(trimmed.initialPotIndex).to.equal(3);
+        });
    });
 
     describe('#sumOfPotNumbersWithPlant()', () => {
@@ -66,6 +75,24 @@ describe('Rule', () => {
 
             expect(rule.pattern).to.deep.equal([PLANT, NO_PLANT, NO_PLANT, NO_PLANT, PLANT]);
             expect(rule.result).to.equal(NO_PLANT);
+        });
+    });
+
+    describe('matches', () => {
+        const rule = new Rule([NO_PLANT, PLANT, NO_PLANT], PLANT);
+
+        it('returns true if pattern matches', () => {
+            expect(rule.matches([NO_PLANT, PLANT, NO_PLANT])).to.equal(true);
+        });
+
+        it('returns false if pattern does not match', () => {
+            expect(rule.matches([NO_PLANT, NO_PLANT, NO_PLANT])).to.equal(false);
+        });
+
+        it('throws error if slice for comparison has different size', () => {
+            expect(() => {
+                rule.matches([PLANT, NO_PLANT]);
+            }).to.throw(Error);
         });
     });
 });
